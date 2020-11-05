@@ -25,5 +25,5 @@ A textbook exchange service for universities.
 
 ## Contributors
 
-* [@jonhermsen-UNO](github.com/jonhermsen-UNO)
-* [@shire17](github.com/shire17)
+* [@jonhermsen-UNO](https://github.com/jonhermsen-UNO)
+* [@shire17](https://github.com/shire17)
