@@ -13,7 +13,7 @@ controller.sendDefault = (request, response) => {
 
 controller.sendEcho = (request, response) => {
   model.updateMessage(request.params.msg)
-  response.send(model)
+  response.json(model)
 }
 
 module.exports = controller
