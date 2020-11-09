@@ -27,3 +27,4 @@ A textbook exchange service for universities.
 
 * [@jonhermsen-UNO](https://github.com/jonhermsen-UNO)
 * [@shire17](https://github.com/shire17)
+* [@uforiginal](https://github.com/uforiginal)
