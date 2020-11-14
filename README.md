@@ -25,6 +25,7 @@ A textbook exchange service for universities.
 
 ## Contributors
 
+* [@Cyber1551](https://github.com/Cyber1551)
 * [@jonhermsen-UNO](https://github.com/jonhermsen-UNO)
 * [@shire17](https://github.com/shire17)
 * [@uforiginal](https://github.com/uforiginal)
