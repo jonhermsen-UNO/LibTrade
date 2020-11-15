@@ -12,9 +12,10 @@ export default {
 
 <style>
     .footer {
-        position:relative;
+        position: relative;
         bottom:0;
         width: 100%;
         text-align: center;
+            
     }
 </style>

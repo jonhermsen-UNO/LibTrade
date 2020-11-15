@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: 'Account',
   data: function() {
@@ -30,10 +31,14 @@ export default {
   },
   methods: {
     login() {
-      // Call API that verifies email and password
-      this.errorMessage = "Invalid credentials";
-      this.$router.push('/');
-    }
+      const data = {
+        username: this.username,
+        password: this.password
+      }
+      axios.post("/api/account", data)
+          .then(this.$router.push('/'))
+          .catch(this.errorMessage = "Invalid credentials")
+      }
   }
 }
 </script>

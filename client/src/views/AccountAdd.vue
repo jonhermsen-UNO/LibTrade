@@ -14,9 +14,9 @@
         </div>
         <div>
         <label for="email">Email address</label>
-        <input v-if="email==''" v-model="email" type="text" class="form-control" id="email" placeholder="Enter email">
-        <input v-else-if="emailUnique(email) && emailValid(email)" v-model="email" type="text" class="form-control is-valid" id="email" placeholder="Enter email">
-        <input v-else v-model="email" type="text" class="form-control is-invalid" id="email" placeholder="Enter email">
+        <input v-if="email==''" v-model="email" type="email" class="form-control" id="email" placeholder="Enter email">
+        <input v-else-if="emailUnique(email) && emailValid(email)" v-model="email" type="email" class="form-control is-valid" id="email" placeholder="Enter email">
+        <input v-else v-model="email" type="email" class="form-control is-invalid" id="email" placeholder="Enter email">
         <div class="valid-feedback">Email is available</div>
         <div class="invalid-feedback">Email is already in use or is invalid</div><br>
         </div>
@@ -59,8 +59,12 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   name: 'AccountAdd',
+  created: function() {
+    this.colleges = axios.get("/api/account/colleges");
+  },
   data: function() {
     return {
       usernameTakenMessage: 'Username is already in use',
@@ -88,7 +92,8 @@ export default {
       return username != '';
     },
     emailValid(email) {
-      return email.includes('@');
+      const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(String(email).toLowerCase());
     },
     emailUnique(email) {
       return email != '';
@@ -100,13 +105,20 @@ export default {
       return password.localeCompare(verifyPassword) == 0;
     },
     register() {
+      const data = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        college: this.college
+      }
         if (this.uniqueUsername(this.username) && this.emailValid(this.email) && this.emailUnique(this.email) 
         && this.emailsMatch(this.email, this.verifyEmail) && this.passwordsMatch(this.password, this.verifyPassword)) {
-          // Call register account logic if there are no errors
-          this.$router.push('/');
+          axios.post("/api/account/register", data)
+          .then(this.$router.push('/'))
+          .catch(this.errorMessage = "There was a problem creating your account.")
         }
         else {
-          this.errorMessage = "One or more fields is blank"
+          this.errorMessage = "One or more fields is blank";
         }
     }
 
@@ -115,6 +127,9 @@ export default {
 </script>
 
 <style>
+  div {
+    min-height: 100%;
+  }
   h1 {
    text-align: center;
   }
