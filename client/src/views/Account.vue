@@ -9,7 +9,7 @@
       <b-form-group label="Password" label-for="password">
         <b-form-input id="password" v-model="password" type="password" placeholder="Enter Password"></b-form-input>
       </b-form-group>
-      <b-button variant="minty" style="width:400px;" type="submit" class="btn btn-primary is-invalid">Login</b-button><br>
+      <b-button block variant="minty" type="submit" class="btn btn-primary is-invalid">Login</b-button><br>
       <div style="text-align:center; font-weight:bold;" class="invalid-feedback">{{errorMessage}}</div>
       </fieldset>
     </b-form>

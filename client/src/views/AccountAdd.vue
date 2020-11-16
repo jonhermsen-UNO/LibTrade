@@ -1,60 +1,51 @@
 <template>
   <div>
     <h1>Register</h1><br>
-    <form>
+    <b-form v-on:submit.prevent="register">
     <fieldset>
-      <div class="form-group">
-        <div>
-        <label for="username">Username</label>
-        <input v-if="username==''" v-model="username" type="text" class="form-control" id="username" placeholder="Enter username">
-        <input v-else-if="uniqueUsername(userName)" v-model="username" type="text" class="form-control is-valid" id="username" placeholder="Enter username">
-        <input v-else v-model="username" type="text" class="form-control is-invalid" id="username" placeholder="Enter username">
+      <b-form-group label="Username" label-for="username">
+        <b-form-input v-if="username==''" id="username" v-model="username" type="text" placeholder="Enter username"></b-form-input>
+        <b-form-input v-else-if="uniqueUsername(username)" id="username" class="is-valid" v-model="username" type="text" placeholder="Enter username"></b-form-input>
+        <b-form-input v-else id="username" class="is-invalid" v-model="username" type="text" placeholder="Enter username"></b-form-input>
         <div class="valid-feedback">Username is available</div>
-        <div class="invalid-feedback">Username is already in use</div><br>
-        </div>
-        <div>
-        <label for="email">Email address</label>
-        <input v-if="email==''" v-model="email" type="email" class="form-control" id="email" placeholder="Enter email">
-        <input v-else-if="emailUnique(email) && emailValid(email)" v-model="email" type="email" class="form-control is-valid" id="email" placeholder="Enter email">
-        <input v-else v-model="email" type="email" class="form-control is-invalid" id="email" placeholder="Enter email">
+        <div class="invalid-feedback">Username is already in use</div>
+      </b-form-group>
+      <b-form-group label="Email Address" label-for="email">
+        <b-form-input v-if="email==''" id="email" v-model="email" type="email" placeholder="Enter email"></b-form-input>
+        <b-form-input v-else-if="emailUnique(email) && emailValid(email)" id="email" class="is-valid" v-model="email" type="email" placeholder="Enter email"></b-form-input>
+        <b-form-input v-else id="email" class="is-invalid" v-model="email" type="email" placeholder="Enter email"></b-form-input>
         <div class="valid-feedback">Email is available</div>
-        <div class="invalid-feedback">Email is already in use or is invalid</div><br>
-        </div>
-        <div>
-        <label for="verifyEmail">Verify Email</label>
-        <input v-if="verifyEmail==''" v-model="verifyEmail" type="text" class="form-control" id="verifyEmail" placeholder="Verify email">
-        <input v-else-if="emailsMatch(email, verifyEmail)" v-model="verifyEmail" type="text" class="form-control is-valid" id="verifyEmail" placeholder="Verify email">
-        <input v-else v-model="verifyEmail" type="text" class="form-control is-invalid" id="verifyEmail" placeholder="Verify email">
+        <div class="invalid-feedback">Email is already in use or is invalid</div>      
+      </b-form-group>
+      <b-form-group label="Verify Email" label-for="verifyEmail">
+        <b-form-input v-if="verifyEmail==''" id="verifyEmail" v-model="verifyEmail" type="email" placeholder="Verify email"></b-form-input>
+        <b-form-input v-else-if="emailsMatch(email, verifyEmail)" id="verifyEmail" class="is-valid" v-model="verifyEmail" type="email" placeholder="Verify email"></b-form-input>
+        <b-form-input v-else id="verifyEmail" class="is-invalid" v-model="verifyEmail" type="email" placeholder="Verify email"></b-form-input>      
         <div class="valid-feedback">Emails match</div>
-        <div class="invalid-feedback">Emails do not match</div><br>
-        </div>
-        <div>
-        <label for="password">Password</label>
-        <input v-model="password" type="password" class="form-control" id="password" placeholder="Password"><br>
-        <label for="verifyPassword">Verify Password</label>
-        <input v-if="verifyPassword==''" v-model="verifyPassword" type="password" class="form-control" id="verifyPassword" placeholder="Verify password">
-        <input v-else-if="passwordsMatch(password, verifyPassword)" v-model="verifyPassword" type="password" class="form-control is-valid" id="verifyPassword" placeholder="Verify password">        
-        <input v-else v-model="verifyPassword" type="password" class="form-control is-invalid" id="verifyPassword" placeholder="Verify password">
+        <div class="invalid-feedback">Emails do not match</div>
+      </b-form-group>   
+      <b-form-group label="Password" label-for="password">
+        <b-form-input v-if="password != '' && passwordsMatch(password, verifyPassword)" id="password" class="is-valid" v-model="password" type="password" placeholder="Enter password"></b-form-input>
+        <b-form-input v-else id="password" v-model="password" type="password" placeholder="Enter password"></b-form-input>
         <div class="valid-feedback">Passwords match</div>
-        <div class="invalid-feedback">Passwords do not match</div><br>        
-        </div>
-        <div>
-        <label for="college">Select College</label>
-        <select class="form-control" v-model="college" id="college">
-          <option v-for="college in colleges" :key="college.name">{{college.name}}</option>
-        </select><br>
-        </div>
-        <div v-if="college=='Other'">
-          <label for="enterCollege">Enter College</label>
-          <input type="text" class="form-control" id="enterCollege" placeholder="Enter College Name"><br>
-        </div>
-        <div>
-        <button style="width:400px;" v-on:click="register" type="submit" class="btn btn-primary is-invalid">Create Account</button><br>
-        <div style="text-align:center; font-weight:bold;" class="invalid-feedback">{{errorMessage}}</div>
-        </div>
-      </div>
+      </b-form-group>      
+      <b-form-group label="Verify Password" label-for="verifyPassword">
+        <b-form-input v-if="verifyPassword==''" id="verifyPassword" v-model="verifyPassword" type="password" placeholder="Verify password"></b-form-input>
+        <b-form-input v-else-if="passwordsMatch(password, verifyPassword)" id="verifyPassword" class="is-valid" v-model="verifyPassword" type="password" placeholder="Verify password"></b-form-input>
+        <b-form-input v-else id="verifyPassword" class="is-invalid" v-model="verifyPassword" type="password" placeholder="Verify password"></b-form-input>
+        <div class="valid-feedback">Passwords match</div>
+        <div class="invalid-feedback">Passwords do not match</div>      
+      </b-form-group>    
+      <b-form-group label="Select College" label-for="college">
+        <b-form-select id="college" v-model="college" :options="collegeList"></b-form-select>  
+      </b-form-group>
+      <b-form-group v-if="college=='Other'" label="Enter College" label-for="enterCollege">
+        <b-form-input id="enterCollege" type="text" placeholder="Enter College Name"></b-form-input>
+      </b-form-group>
+      <b-button block variant="minty" type="submit" class="btn btn-primary is-invalid">Register</b-button>
+      <div style="text-align:center; font-weight:bold;" class="invalid-feedback">{{errorMessage}}</div><br>
     </fieldset>
-    </form>
+    </b-form>
   </div>
 </template>
 
@@ -73,10 +64,9 @@ export default {
       emailsNotMatchedMessage: 'Emails do not match',
       passwordsNotMatchedMessage: 'Passwords do not match',
       // Fake data for now
-      colleges: [
-        {name: 'University of Nebraska at Omaha', id: 1},
-        {name: 'Iowa State', id: 2},
-        {name: 'Other', id: 3}
+      collegeList: [
+        {text: 'University Of Nebraska at Omaha', value: 'University of Nebraska at Omaha'}, 
+        {text: 'Iowa State', value: 'Iowa State'}, {text: 'Other', value: 'Other'}
       ],
       username: '',
       email: '',
@@ -118,7 +108,7 @@ export default {
           .catch(this.errorMessage = "There was a problem creating your account.")
         }
         else {
-          this.errorMessage = "One or more fields is blank";
+          this.errorMessage = "One or more fields is blank or you have an error with your input";
         }
     }
 
