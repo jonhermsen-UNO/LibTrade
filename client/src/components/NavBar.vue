@@ -1,7 +1,10 @@
 <template>
     <b-navbar class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <p><b-img thumbnail src='../assets/temp-logo.png' width='40' height='40'></b-img></p>
-
+        <b-navbar-brand href='/'>
+            <!-- Book Vectors by Vecteezy https://www.vecteezy.com/free-vector/book -->
+            <img src='@/assets/logo.png'>
+            LibTrade
+        </b-navbar-brand>
         <b-collapse is-nav>
             <b-navbar-nav>
                 <b-nav-item href='/'>Home</b-nav-item>
