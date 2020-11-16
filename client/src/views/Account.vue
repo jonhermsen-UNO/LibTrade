@@ -38,7 +38,7 @@ export default {
       axios.post("/api/account", data)
           .then(this.$router.push('/'))
           .catch(this.errorMessage = "Invalid credentials")
-      }
+    }
   }
 }
 </script>
