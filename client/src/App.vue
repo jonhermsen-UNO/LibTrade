@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="d-flex flex-column">
     <NavBar v-bind:username="username"></NavBar>
-    <router-view/>
+    <router-view class="flex-grow-1 my-3"/>
     <Footer/>
   </div>
 </template>
@@ -35,7 +35,4 @@ export default {
 </script>
 
 <style>
-html, body {
-width: 100%;
-}
 </style>
