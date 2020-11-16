@@ -9,8 +9,10 @@
             <b-navbar-nav>
                 <b-nav-item href='/'>Home</b-nav-item>
                 <b-nav-item href='/register'>Register</b-nav-item>
-                <b-button v-if="username != ''" v-on:click="logout" style="position:absolute; right:20px; top:20px">Log Out</b-button>
-                <b-button v-else href='/login' style="position:absolute; right:20px; top:20px">Log In</b-button>
+            </b-navbar-nav>
+            <b-navbar-nav class='ml-auto'>
+                <b-button v-if="username != ''" v-on:click="logout">Log Out</b-button>
+                <b-button v-else href='/login'>Log In</b-button>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
