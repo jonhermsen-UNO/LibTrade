@@ -35,7 +35,4 @@ export default {
 </script>
 
 <style>
-html, body {
-width: 100%;
-}
 </style>
