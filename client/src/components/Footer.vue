@@ -1,7 +1,5 @@
 <template>
-    <footer>
-        <p class="footer">LibTrade © 2020 | All Rights Reserved</p>
-    </footer>
+    <footer class="text-center py-3">LibTrade © 2020 | All Rights Reserved</footer>
 </template>
 
 <script>
@@ -11,10 +9,4 @@ export default {
 </script>
 
 <style>
-    .footer {
-        position: relative;
-        bottom:0;
-        width: 100%;
-        text-align: center;
-    }
 </style>
