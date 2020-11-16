@@ -4,10 +4,10 @@
 
         <b-collapse is-nav>
             <b-navbar-nav>
-                <b-nav-item href='/'>Home</b-nav-item>
-                <b-nav-item href='/register'>Register</b-nav-item>
-                <b-button v-if="username != ''" v-on:click="logout" style="position:absolute; right:20px; top:20px">Log Out</b-button>
-                <b-button v-else href='/login' style="position:absolute; right:20px; top:20px">Log In</b-button>
+                <b-nav-item id="home" href='/'>Home</b-nav-item>
+                <b-nav-item id="register" href='/register'>Register</b-nav-item>
+                <b-button v-if="username != ''" id="logout" v-on:click="logout" style="position:absolute; right:20px; top:20px">Log Out</b-button>
+                <b-button v-else id="login" v-on:click="href='/login'" style="position:absolute; right:20px; top:20px">Log In</b-button>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
@@ -15,6 +15,13 @@
 
 <script>
 import axios from "axios";
+import Vue from 'vue';
+import { ButtonPlugin } from 'bootstrap-vue'
+Vue.use(ButtonPlugin)
+import { NavbarPlugin } from 'bootstrap-vue'
+Vue.use(NavbarPlugin)
+import { ImagePlugin } from 'bootstrap-vue'
+Vue.use(ImagePlugin)
 export default {
     name: 'NavBar',
     props: {

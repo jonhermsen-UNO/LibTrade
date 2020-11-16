@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="registerForm">
     <h1>Register</h1><br>
     <b-form v-on:submit.prevent="register">
     <fieldset>
@@ -51,6 +51,9 @@
 
 <script>
 import axios from "axios"
+import Vue from 'vue';
+import { ButtonPlugin } from 'bootstrap-vue'
+Vue.use(ButtonPlugin)
 export default {
   name: 'AccountAdd',
   created: function() {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="loginForm">
     <h1>Login</h1><br>
     <b-form v-on:submit.prevent="login">
       <fieldset>
@@ -18,6 +18,9 @@
 
 <script>
 import axios from "axios";
+import Vue from 'vue';
+import { ButtonPlugin } from 'bootstrap-vue'
+Vue.use(ButtonPlugin)
 export default {
   name: 'Account',
   data: function() {
