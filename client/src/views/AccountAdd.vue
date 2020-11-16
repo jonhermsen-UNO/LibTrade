@@ -54,7 +54,7 @@ import axios from "axios"
 export default {
   name: 'AccountAdd',
   created: function() {
-    this.colleges = axios.get("/api/account/colleges");
+    this.collegeList = axios.get("/api/account/colleges");
   },
   data: function() {
     return {
