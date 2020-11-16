@@ -1,11 +1,12 @@
 <template>
-    <b-navbar class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <b-navbar toggleable='lg' type='dark' variant='primary'>
         <b-navbar-brand href='/'>
             <!-- Book Vectors by Vecteezy https://www.vecteezy.com/free-vector/book -->
             <img src='@/assets/logo.png'>
             LibTrade
         </b-navbar-brand>
-        <b-collapse is-nav>
+        <b-navbar-toggle target='nav-main'></b-navbar-toggle>
+        <b-collapse id='nav-main' is-nav>
             <b-navbar-nav>
                 <b-nav-item href='/'>Home</b-nav-item>
                 <b-nav-item href='/register'>Register</b-nav-item>
