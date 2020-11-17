@@ -1,17 +1,22 @@
+const passport = require("passport")
 const accountModel = require('../models/account')
 const collegeModel = require('../models/college')
-const controller = {}
+//var LocalStrategy = passport.LocalStrategy
+const controller = {
 
-controller.authenticateAccount = (request, response) => {
-  response.send('login')
-}
+  //logging in
+  authenticateAccount : (request, response) => {
+    response.render('login', {user: request.user})
+  },
 
-controller.registerAccount = (request, response) => {
-  response.send('register')
-}
+  //TODO: register
+  registerAccount : (request, response) => {
+    response.render('register')
+  },
 
-controller.sendColleges = (request, response) => {
-  response.send('colleges')
-}
+  sendColleges : (request, response) => {
+    response.send('colleges')
+  }
+};
 
 module.exports = controller

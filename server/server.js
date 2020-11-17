@@ -1,3 +1,4 @@
+const passportSetup = require('./config/passport-setup')
 const express = require('express')
 const app = express()
 

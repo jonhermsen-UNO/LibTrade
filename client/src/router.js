@@ -4,8 +4,13 @@ import Account from '@/views/Account'
 import AccountAdd from '@/views/AccountAdd'
 import Home from './views/Home'
 import PageNotFound from '@/views/PageNotFound'
+const passport = require('passport')
 
 Vue.use(Router)
+
+const checkConsent = passport.authenticate('google', {
+  scope: ['profile']
+});
 
 export default new Router({
   mode: 'history',
@@ -29,6 +34,12 @@ export default new Router({
       path: '*',
       name: '404',
       component: PageNotFound
+    },
+    {
+      path: '/auth/google/redirect',
+      name: 'Google Login',
+      component: Home,
+      beforeEnter: checkConsent //makes sure user goes through the google consent page before being logged in
     } 
   ]
 })
