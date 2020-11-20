@@ -4,12 +4,14 @@ const passport = require('passport')
 const controller = {}
 
   //logging in
-controller.authenticateAccount = passport.authenticate('google', {
-  scope: ['profile']
+controller.authenticateAccount = passport.authenticate('local', {
+  successRedirect: '/hello/:logged+in',
+  failureRedirect: '/hello/:not+logged+in'
 })
-/*(request, response) => {
-  accountModel.updateMessage('login!')
-  response.json(accountModel)*/
+
+controller.authenticateGoogle = passport.authenticate('google', {
+  scope:['profile']
+})
 
   //TODO: register
 controller.registerAccount = (request, response) => {
