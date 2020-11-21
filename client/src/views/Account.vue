@@ -1,8 +1,8 @@
 <template>
-  <div id="loginForm">
+  <div id="loginForm" class="text-center">
     <h1>Login</h1><br>
     <b-form v-on:submit.prevent="login">
-      <fieldset>
+      <fieldset class="mx-auto w-100" style="max-width:400px">
       <b-form-group label="Username" label-for="username">
         <b-form-input id="username" v-model="username" type="text" placeholder="Enter Username"></b-form-input>
       </b-form-group>

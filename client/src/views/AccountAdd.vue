@@ -1,8 +1,8 @@
 <template>
-  <div id="registerForm">
+  <div id="registerForm" class="text-center">
     <h1>Register</h1><br>
     <b-form v-on:submit.prevent="register">
-    <fieldset>
+    <fieldset class="mx-auto w-100" style="max-width:400px">
       <b-form-group label="Username" label-for="username">
         <b-form-input v-if="username==''" id="username" v-model="username" type="text" placeholder="Enter username"></b-form-input>
         <b-form-input v-else-if="uniqueUsername(username)" id="username" class="is-valid" v-model="username" type="text" placeholder="Enter username"></b-form-input>
@@ -120,33 +120,4 @@ export default {
 </script>
 
 <style>
-  div {
-    min-height: 100%;
-  }
-  h1 {
-   text-align: center;
-  }
-  fieldset {
-    width: 400px;
-    margin: auto;
-  }
-  label {
-    width: 400px;
-    text-align: center;
-  }
-  input {
-    width: 400px;
-  }
-  input[type="text"]::placeholder {
-    text-align:center;
-  }
-  input[type="email"]::placeholder {
-    text-align:center;
-  }
-  input[type="password"]::placeholder {
-    text-align:center;
-  }
-  select {
-    width: 400px;
-  }
 </style>
