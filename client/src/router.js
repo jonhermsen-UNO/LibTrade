@@ -37,11 +37,6 @@ export default new Router({
       component: ListingList
     },
     {
-      path: '/textbookSearch',
-      name: 'TextbookSearch',
-      component: TextbookSearch
-    },
-    {
       path: '*',
       name: '404',
       component: PageNotFound
