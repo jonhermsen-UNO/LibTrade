@@ -9,7 +9,7 @@
       <b-form-group label="Password" label-for="password">
         <b-form-input id="password" v-model="password" type="password" placeholder="Enter Password"></b-form-input>
       </b-form-group>
-      <b-button block variant="minty" type="submit" class="btn btn-primary is-invalid">Login</b-button><br>
+      <b-button id="loginButton" block variant="minty" type="submit" class="btn btn-primary is-invalid">Login</b-button><br>
       <div style="text-align:center; font-weight:bold;" class="invalid-feedback">{{errorMessage}}</div>
       </fieldset>
     </b-form>
@@ -21,6 +21,12 @@ import axios from "axios";
 import Vue from 'vue';
 import { ButtonPlugin } from 'bootstrap-vue'
 Vue.use(ButtonPlugin)
+import { FormPlugin } from 'bootstrap-vue'
+Vue.use(FormPlugin)
+import { BFormInput } from 'bootstrap-vue'
+Vue.component('b-form-input', BFormInput)
+import { BFormGroup } from 'bootstrap-vue'
+Vue.component('b-form-group', BFormGroup)
 export default {
   name: 'Account',
   data: function() {
@@ -39,9 +45,12 @@ export default {
         username: this.username,
         password: this.password
       }
-      axios.post("/auth/google/redirect", data)
+      if (this.username == "" || this.password == "") this.errorMessage = "One or more fields is blank"
+      else { 
+          axios.post("/auth/google/redirect", data)
           .then(this.$router.push('/'))
           .catch(this.errorMessage = "Invalid credentials")
+      }
     }
   }
 }

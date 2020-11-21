@@ -7,6 +7,9 @@
 
 <script>
 import Book from '../components/Book.vue'
+import Vue from 'vue'
+import { ButtonPlugin } from 'bootstrap-vue'
+Vue.use(ButtonPlugin)
 export default {
   name: 'Listing',
   components: {

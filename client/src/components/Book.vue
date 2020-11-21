@@ -17,6 +17,9 @@
 
 <script>
 //import axios from 'axios'
+import Vue from 'vue';
+import { LayoutPlugin } from 'bootstrap-vue'
+Vue.use(LayoutPlugin)
 export default {
   name: 'Book',
   data: function() {

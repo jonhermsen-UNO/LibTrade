@@ -54,6 +54,14 @@ import axios from "axios"
 import Vue from 'vue';
 import { ButtonPlugin } from 'bootstrap-vue'
 Vue.use(ButtonPlugin)
+import { FormPlugin } from 'bootstrap-vue'
+Vue.use(FormPlugin)
+import { BFormInput } from 'bootstrap-vue'
+Vue.component('b-form-input', BFormInput)
+import { BFormGroup } from 'bootstrap-vue'
+Vue.component('b-form-group', BFormGroup)
+import { BFormSelect } from 'bootstrap-vue'
+Vue.component('b-form-select', BFormSelect)
 export default {
   name: 'AccountAdd',
   created: function() {
