@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="d-flex flex-column">
+  <div id="app" class="d-flex flex-column h-100">
     <NavBar v-bind:username="username"></NavBar>
     <router-view class="flex-grow-1 my-3"/>
     <Footer/>

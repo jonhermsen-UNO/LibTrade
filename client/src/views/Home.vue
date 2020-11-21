@@ -1,5 +1,5 @@
 <template>
-  <div id="homePage">
+  <div id="homePage" class="text-center">
     <h1>Welcome to LibTrade</h1>
   </div>
 </template>
