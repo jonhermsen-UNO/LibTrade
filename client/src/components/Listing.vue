@@ -1,10 +1,9 @@
 <template>
-    <p>Textbook Details</p>
 </template>
 
 <script>
 export default {
-  name: 'TextbookDetails'
+  name: 'Listing'
 }
 </script>
 

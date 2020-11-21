@@ -39,7 +39,7 @@ export default {
         username: this.username,
         password: this.password
       }
-      axios.post("/api/account", data)
+      axios.post("/auth/google/redirect", data)
           .then(this.$router.push('/'))
           .catch(this.errorMessage = "Invalid credentials")
     }
