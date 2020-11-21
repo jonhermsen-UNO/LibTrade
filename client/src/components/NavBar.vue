@@ -13,7 +13,7 @@
             </b-navbar-nav>
             <b-navbar-nav class='m1-auto'>
                 <b-button v-if="username != ''" id="logout" v-on:click="logout" style="position:absolute; right:20px; top:20px">Log Out</b-button>
-                <b-button v-else id="login" v-on:click="href='/login'" >Log In</b-button>
+                <b-button v-else id="login" href='/login'>Log In</b-button>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
