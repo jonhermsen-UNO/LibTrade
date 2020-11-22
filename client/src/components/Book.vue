@@ -6,9 +6,9 @@
             </b-col>
             <b-col cols="8">
                 <h2 class="text-primary">{{bookData.Title}}</h2>
-                <div class="lead">{{bookData.Publisher}}, {{bookData.PublishYear}}<br>
-                {{bookData.Author}}<br>
-                ISBN: {{bookData.ISBN10}}/{{bookData.ISBN13}}<br>
+                <div class="lead">{{bookData.Publisher}}, {{bookData.PublishYear}}</div>
+                <div>{{bookData.Author}}<br>
+                ISBN: {{bookData.ISBN10}} / {{bookData.ISBN13}}<br>
                 Retail: ${{bookData.RetailPrice.toFixed(2)}}</div>
             </b-col>
         </b-row>

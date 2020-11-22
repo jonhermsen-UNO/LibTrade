@@ -51,7 +51,7 @@ export default {
             "BookListingID": 12,
             "AccountID": 2,
             "BookID": "LjUY4QQsC",
-            "AskingPrice": 104.99
+            "AskingPrice": 1.99
           }
       ]
     }
