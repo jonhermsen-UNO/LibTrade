@@ -20,9 +20,9 @@ import Listing from '../components/Listing.vue'
 import Vue from 'vue'
 import { LayoutPlugin } from 'bootstrap-vue'
 Vue.use(LayoutPlugin)
-import { BListGroup } from 'bootstrap-vue'
+import { BListGroup, BListGroupItem } from 'bootstrap-vue'
 Vue.component('b-list-group', BListGroup)
-Vue.component('b-list-group-item', BListGroup)
+Vue.component('b-list-group-item', BListGroupItem)
 import { ImagePlugin } from 'bootstrap-vue'
 Vue.use(ImagePlugin)
 // import axios from 'axios'

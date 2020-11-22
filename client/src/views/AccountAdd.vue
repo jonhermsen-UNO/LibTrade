@@ -65,7 +65,7 @@ Vue.component('b-form-select', BFormSelect)
 export default {
   name: 'AccountAdd',
   created: function() {
-    this.collegeList = axios.get("/api/account/colleges");
+    //this.collegeList = axios.get("/api/account/colleges");
   },
   data: function() {
     return {
@@ -105,7 +105,7 @@ export default {
     passwordsMatch(password, verifyPassword) {
       return password.localeCompare(verifyPassword) == 0;
     },
-    register() {
+    async register() {
       const data = {
         username: this.username,
         email: this.email,

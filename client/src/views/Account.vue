@@ -40,7 +40,7 @@ export default {
     this.errorMessage = '';
   },
   methods: {
-    login() {
+    async login() {
       const data = {
         username: this.username,
         password: this.password
