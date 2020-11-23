@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-button variant="info" class="float-right">Buy ${{listingData.AskingPrice.toFixed(2)}}</b-button>
-        <Book :id=listingData.BookListingID></Book><br>
+        <Book :id=listingData.BookID></Book><br>
     </div>
 </template>
 
