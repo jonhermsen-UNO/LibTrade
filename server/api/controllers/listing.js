@@ -1,8 +1,13 @@
+const listingModel = require('../models/listing')
 const bookModel = require('../models/book')
 const controller = {}
 
 controller.sendListings = (request, response) => {
-  response.json({})
+  listingModel
+    .getListings()
+    .then((listings) => {
+      response.json(listings)
+    })
 }
 
 controller.sendBook = (request, response) => {
