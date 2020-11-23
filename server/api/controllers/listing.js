@@ -7,10 +7,10 @@ controller.sendListings = (request, response) => {
 
 controller.sendBook = (request, response) => {
   bookModel
-  .getBook(request.params.id)
-  .then((book) => {
-    response.json(book)
-  })
+    .getBook(request.params.id)
+    .then((book) => {
+      response.json(book)
+    })
 }
 
 module.exports = controller
