@@ -22,7 +22,7 @@ export default {
     }
   },
   mounted: function() {
-    this.getUserData();
+    // this.getUserData();
   },
   methods: {
     getUserData() {
