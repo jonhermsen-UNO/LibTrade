@@ -3,20 +3,20 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const Sequelize = require('sequelize')
-var db = require('./lib/dbconn')
+// const Sequelize = require('sequelize')
+// var db = require('./lib/dbconn')
 
 //allows us to parse the app/json
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //create instance of sequelize from db info
-const sequelize = new Sequelize(db);
+// const sequelize = new Sequelize(db);
 //check connection to db
-sequelize
-  .authenticate()
-  .then(() => console.log('Connection has been established successfully.'))
-  .catch(err => console.error('Unable to connect to the database:', err));
+// sequelize
+//   .authenticate()
+//   .then(() => console.log('Connection has been established successfully.'))
+//   .catch(err => console.error('Unable to connect to the database:', err));
 
 //session info
 /*const sequelize = new Sequelize({
