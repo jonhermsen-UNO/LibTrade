@@ -25,7 +25,7 @@ Vue.component('b-list-group', BListGroup)
 Vue.component('b-list-group-item', BListGroupItem)
 import { ImagePlugin } from 'bootstrap-vue'
 Vue.use(ImagePlugin)
-// import axios from 'axios'
+import axios from 'axios'
 export default {
   name: 'ListingList',
   components: {
@@ -33,28 +33,14 @@ export default {
   },
   data: function() {
       return {
-          listings: [
-              // axios.get("api/listing")
-          {
-              "BookListingID": 15,
-              "AccountID": 2,
-              "BookID": "Lj-4ZUY4QQsC",
-              "AskingPrice": 9.80
-          },
-          {
-            "BookListingID": 10,
-            "AccountID": 2,
-            "BookID": "Lj-4ZUY4QQC",
-            "AskingPrice": 10.23
-          },
-          {
-            "BookListingID": 12,
-            "AccountID": 2,
-            "BookID": "LjUY4QQsC",
-            "AskingPrice": 1.99
-          }
-      ]
-    }
+        listings: []
+      }
+  },
+  mounted () {
+      axios.get('http://localhost:8001/api/listing')
+      .then((response) => {
+          this.listings = response.data
+      })
   }
 }
 </script>
