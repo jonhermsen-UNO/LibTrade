@@ -1,6 +1,6 @@
 const model = {}
 
-bookShelf = [{
+const Books = [{
   "BookID": "Lj-4ZUY4QQsC",
   "CacheDate": "2020-11-18",
   "PublishYear": 2005,
@@ -37,7 +37,7 @@ bookShelf = [{
 
 model.getBook = (id) => {
   return new Promise((resolve, reject) => {
-    bookShelf.forEach((book) => {
+    Books.forEach((book) => {
       if (book.BookID == id.toString()) {
         resolve(book)
       }
