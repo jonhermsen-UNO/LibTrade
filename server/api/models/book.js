@@ -36,10 +36,13 @@ bookShelf = [{
 }]
 
 model.getBook = (id) => {
-  bookShelf.forEach((book) => {
-    if (book.BookID === id)
-    return book;
-  });
+  return new Promise((resolve, reject) => {
+    bookShelf.forEach((book) => {
+      if (book.BookID == id.toString()) {
+        resolve(book)
+      }
+    })
+  })
 }
 
 module.exports = model
