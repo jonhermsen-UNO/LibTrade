@@ -115,7 +115,7 @@ export default {
         if (this.uniqueUsername(this.username) && this.emailValid(this.email) && this.emailUnique(this.email) 
         && this.emailsMatch(this.email, this.verifyEmail) && this.passwordsMatch(this.password, this.verifyPassword)) {
           axios.post("/api/account/register", data)
-          .then(this.$router.push('/'))
+          .then(this.$router.push('/listings'))
           .catch(this.errorMessage = "There was a problem creating your account.")
         }
         else {
