@@ -1,6 +1,6 @@
 # LibTrade
 
-A textbook exchange service for universities.
+A textbook exchange service for university students.
 
 ## Prerequisites
 
