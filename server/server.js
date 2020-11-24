@@ -31,6 +31,12 @@ auth(passport)
 app.use(passport.initialize())
 app.use(passport.session())
 
+// enable CORS with the client
+app.use((request, response, next) => {
+  response.header('Access-Control-Allow-Origin', '*')
+  next()
+})
+
 const hello = require('./api/routes/hello')
 app.use('/hello', hello)
 
