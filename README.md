@@ -14,7 +14,10 @@ A textbook exchange service for university students.
 * Google Books
 * NodeJS 12.19
 * NPM 6.14
+  * Axios
+  * Express
   * Jest
+  * MySQL
   * Passport
   * TypeORM
   * Vue
