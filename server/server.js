@@ -43,6 +43,9 @@ app.use('/hello', hello)
 const account = require('./api/routes/account')
 app.use('/api/account', account)
 
+const listing = require('./api/routes/listing')
+app.use('/api/listing', listing)
+
 //where the user goes after authenticating with google
 app.get('/api/account/callback', 
   passport.authenticate('google', { failureRedirect: '/api/account' }),
