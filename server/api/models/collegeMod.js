@@ -8,7 +8,7 @@ model.updateID = (id) => {
   model.id = id
 }
 
-model.updateName = (nanme) => {
+model.updateName = (name) => {
   model.name = name
 }
 
