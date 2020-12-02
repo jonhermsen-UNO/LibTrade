@@ -1,5 +1,5 @@
-const accountModel = require('../models/account')
-const collegeModel = require('../models/college')
+const accountModel = require('../models/accountMod')
+const collegeModel = require('../models/collegeMod')
 const listingModel = require('../models/listingMod')
 const passport = require('passport')
 const controller = {}
@@ -11,7 +11,16 @@ const controller = {}
 
  //gets listing from db to view listing
 controller.viewListing = function(req, res){
-  res.send("viewListing not yet implemented (GET)");
+  listingModel.findOne({where:{bookID: req.body.bookID}}).then(
+    function(listing){
+      if(listing){
+        return res.send(listing);
+      }
+      else{
+        return res.send('no listing available');
+      }
+    }
+  )
 };
 
 //posts listing made with listing form to db
@@ -23,3 +32,5 @@ controller.postListing = function(req, res){
 controller.removeListing = function(req, res){
   res.send("viewListing not yet implemented (POST)");
 };
+
+module.exports = controller

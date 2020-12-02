@@ -1,4 +1,4 @@
-const model = require('../models/hello')
+const model = require('../models/helloMod')
 const controller = {}
 
 controller.checkIP = (request, response, next) => {

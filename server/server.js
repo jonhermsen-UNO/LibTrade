@@ -2,8 +2,9 @@ const passport = require('passport')
 const auth = require('./config/passport-setup')
 const express = require('express')
 const app = express()
+const session    = require('express-session')
 const bodyParser = require('body-parser')
-const Sequelize = require('sequelize')
+const {Sequelize, Model, DataTypes } = require('sequelize')
 var db = require('./lib/dbconn')
 
 //allows us to parse the app/json
@@ -18,16 +19,9 @@ sequelize
   .then(() => console.log('Connection has been established successfully.'))
   .catch(err => console.error('Unable to connect to the database:', err));
 
-//session info
-/*const sequelize = new Sequelize({
-  name: 'LIBSESH',
-  secret: 'APHOTOOFSPONGEBOBATTHECHRISTMASPARTY',
-  resave: true,
-  saveUninitialized: true
-});*/
-
 //start passport
 auth(passport)
+app.use(session({secret: 'yourmom',resave: true, saveUninitialized:true})); //session secret thats not so secret atm
 app.use(passport.initialize())
 app.use(passport.session())
 

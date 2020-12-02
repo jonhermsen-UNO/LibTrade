@@ -1,24 +1,11 @@
-const model = {}
-
-model.id = ''
-model.username = ''
-model.email = ''
-model.collegeID = ''
-
-model.updateid = (id) => {
-  model.id = id
-}
-
-model.updateUsername = (username) => {
-  model.username = username
-}
-
-model.updateEmail = (email) => {
-  model.email = email
-}
-
-model.updateCollege = (college) => {
-  model.collegeID = college
-}
+const { Sequelize, DataTypes } = require('sequelize');
+const db = require('../../lib/dbconn')
+const sequelize = new Sequelize(db);
+const model = sequelize.define('User', {
+  username: DataTypes.STRING,
+  password: DataTypes.STRING,
+  email: DataTypes.STRING,
+  collegeID: DataTypes.STRING
+});
 
 module.exports = model

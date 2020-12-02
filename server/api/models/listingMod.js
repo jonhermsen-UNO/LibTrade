@@ -1,11 +1,17 @@
-const model = {}
+const { Sequelize, DataTypes } = require('sequelize');
+const db = require('../../lib/dbconn')
+const sequelize = new Sequelize(db);
+const model = sequelize.define('Listing', {
+  bookID: DataTypes.STRING,
+  price: DataTypes.STRING,
+  user_id: DataTypes.STRING
+},{
+  timestamps: false
+});
 
-model.id = ''
-model.bookID = ''
-model.price = ''
-model.userID = ''
+module.exports = model
 
-model.updateID = (id) => {
+/*model.updateID = (id) => {
   model.id = id
 }
 
@@ -19,7 +25,7 @@ model.updatePrice = (price) => {
 
 model.updateUserID = (id) => {
     model.userID = id
-}
+}*/
 
 
 module.exports = model

@@ -8,11 +8,13 @@ router
   .post(controller.postListing)
 
 router
-.route('/view/:id')
+.route('/view')
     .get(controller.viewListing)
     .post(controller.viewListing)
 
 router
-.route('/remove/:id')
+.route('/remove')
     .get(controller.viewListing)
     .post(controller.removeListing)
+
+module.exports = router

@@ -1,12 +1,12 @@
-const accountModel = require('../models/account')
-const collegeModel = require('../models/college')
+const accountModel = require('../models/accountMod')
+const collegeModel = require('../models/collegeMod')
 const passport = require('passport')
 const controller = {}
 
   //logging in
 controller.authenticateAccount = passport.authenticate('local', {
-  successRedirect: '/hello/:logged+in',
-  failureRedirect: '/hello/:not+logged+in'
+  successRedirect: '/hello/:logged_in',
+  failureRedirect: '/hello/:not_logged_in'
 })
 
 controller.authenticateGoogle = passport.authenticate('google', {

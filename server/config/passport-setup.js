@@ -2,32 +2,37 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 const LocalStrategy = require('passport-local')
 const keys = require('./keys');
-//followed this tutorial 'https://www.youtube.com/watch?v=kDhYUPcDS28&list=PL4cUxeGkcC9jdm7QX143aMLAqyM-jTZ2x&index=5'
-//also this https://medium.com/@bogna.ka/integrating-google-oauth-with-express-application-f8a4a2cf3fee
+const User = require('../api/models/accountMod')
 
 module.exports = (passport) => {
     passport.serializeUser((user, done) => {
         done(null, user);
-    });    passport.deserializeUser((user, done) => {
+    });    
+    passport.deserializeUser((user, done) => {
         done(null, user);
     });
 
-    passport.use(new LocalStrategy(
-        function(username, password, done) {
-          User.findOne({ username: username }, function (err, user) {
-            if (err) { return done(err); }
-            if (!user) {
-              return done(null, false, { message: 'Incorrect username.' });
-            }
-            if (!user.validPassword(password)) {
-              return done(null, false, { message: 'Incorrect password.' });
-            }
-            return done(null, user);
-          });
-        }
-      ));
+    passport.use(new LocalStrategy( 
+      {
+        username:'username', 
+        password:'password',
+        passReqToCallback: true
+      },
+        function(req, username, password, done) {
+          console.log(username);
+          User.findOne( {attributes:['username'], where: {username: username, password: password}}).then(
+            function(authUser) {
+              if(authUser){
+                return done(null, authUser);
+              }
+              else{
+                return done(null, false, {message: 'incorrect credentials'});
+              }
+            });
+          })
+    );
 
-    passport.serializeUser(function(user, done){
+    /*passport.serializeUser(function(user, done){
         done(null, user.id);
     });
     
@@ -35,7 +40,7 @@ module.exports = (passport) => {
         connection.query("select * from tbl_users where id = "+ id, function (err, rows){
             done(err, rows[0]);
         });
-    });
+    });*/
 
     passport.use(
         new GoogleStrategy({
