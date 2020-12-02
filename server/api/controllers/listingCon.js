@@ -5,9 +5,9 @@ const passport = require('passport')
 const controller = {}
 
 //gets listing form to create listing
- controller.createListing = function(req, res){
+ /*controller.createListing = function(req, res){
    res.send("createListing not yet implemented (GET)");
- };
+ };*/
 
  //gets listing from db to view listing
 controller.viewListing = function(req, res){
@@ -25,7 +25,20 @@ controller.viewListing = function(req, res){
 
 //posts listing made with listing form to db
 controller.postListing = function(req, res){
-  res.send("viewListing not yet implemented (POST)");
+  listingModel.create({
+    bookID: req.body.bookID,
+    price: req.body.price,
+    user_id: req.body.user_id
+  }).then(
+    function(posted){
+      if(posted){
+        return res.send(posted);
+      }
+      else{
+        return res.send('unable to create listing');
+      }
+    }
+  )
 };
 
 //posts removal request for listing, listing is removed from db

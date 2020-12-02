@@ -4,7 +4,7 @@ const router = express.Router()
 
 router
 .route('/create')
-  .get(controller.createListing)
+  //.get(controller.createListing)
   .post(controller.postListing)
 
 router
