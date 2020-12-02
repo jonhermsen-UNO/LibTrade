@@ -1,5 +1,3 @@
-const keys = require("../../config/keys");
-
 const model = {}
 
 const Books = [{
@@ -36,19 +34,8 @@ const Books = [{
   "RetailPrice": 63.49,
   "ThumbnailURL": "http://books.google.com/books/content?id=3sdUewAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
 }]
-const Books = [];
-model.getBooks = () => {
-  //TODO 
-}
 
-//This is a test function to get the google api to work. Might not be needed
-model.searchBookByName = (searchQuery) => {
-  const URI = `https://www.googleapis.com/books/v1/volumes?q=${searchQuery}&key=${keys.google.apiKey}`;
-  let book = axios({method: 'get', url: URI}); //Require JWT token from the passport Oauth2
-  console.log(book);
-}
-//Renamed from 'getBook' to be clearer
-model.getBookById = (id) => {
+model.getBook = (id) => {
   return new Promise((resolve, reject) => {
     Books.forEach((book) => {
       if (book.BookID == id.toString()) {
