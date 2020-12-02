@@ -2,6 +2,11 @@ const controller = require('../controllers/listingCon')
 const express = require('express')
 const router = express.Router()
 
+
+router
+.route('/book')
+  .get(controller.viewListing)
+
 router
 .route('/create')
   //.get(controller.createListing)

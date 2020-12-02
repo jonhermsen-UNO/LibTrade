@@ -1,12 +1,18 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../../lib/dbconn')
 const sequelize = new Sequelize(db);
-const model = sequelize.define('Listing', {
-  bookID: DataTypes.STRING,
-  price: DataTypes.STRING,
-  user_id: DataTypes.STRING
+const model = sequelize.define('BookListing', {
+  BookListingID:{
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  AccountID: DataTypes.INTEGER,
+  BookID: DataTypes.STRING,
+  AskingPrice: DataTypes.DECIMAL(6,2)
 },{
-  timestamps: false
+  timestamps: false,
+  tableName: 'BookListing'
 });
 
 module.exports = model

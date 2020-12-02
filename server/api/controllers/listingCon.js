@@ -11,7 +11,12 @@ const controller = {}
 
  //gets listing from db to view listing
 controller.viewListing = function(req, res){
-  listingModel.findOne({where:{bookID: req.body.bookID}}).then(
+  listingModel.findOne({
+    where:{
+      AccountID: req.body.AccountID,
+      BookID: req.body.BookID,
+      AskingPrice: req.body.AskingPrice
+    }}).then(
     function(listing){
       if(listing){
         return res.send(listing);
