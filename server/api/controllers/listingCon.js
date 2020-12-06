@@ -31,9 +31,9 @@ controller.viewListing = function(req, res){
 //posts listing made with listing form to db
 controller.postListing = function(req, res){
   listingModel.create({
-    bookID: req.body.bookID,
-    price: req.body.price,
-    user_id: req.body.user_id
+    AccountID: req.body.AccountID,
+    BookID: req.body.BookID,
+    AskingPrice: req.body.AskingPrice
   }).then(
     function(posted){
       if(posted){

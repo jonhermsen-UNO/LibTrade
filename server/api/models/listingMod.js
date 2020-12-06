@@ -7,7 +7,10 @@ const model = sequelize.define('BookListing', {
     primaryKey: true,
     autoIncrement: true
   },
-  AccountID: DataTypes.INTEGER,
+  AccountID: {
+    type: DataTypes.INTEGER,
+    defaultValue: -1 
+  },
   BookID: DataTypes.STRING,
   AskingPrice: DataTypes.DECIMAL(6,2)
 },{
