@@ -16,20 +16,22 @@ router
   .post(controller.deauthenticateAccount)
 
 router
-  .route('/login-google')
-  .post(controller.authenticateGoogle)
-
-router
   .route('/register')
   .post(controller.registerAccount)
+
+router
+  .route('/colleges')
+  .get(controller.sendColleges)
+
+/*** Unofficial APIs ***/
+
+router
+  .route('/login-google')
+  .post(controller.authenticateGoogle)
 
 router
   .route('/callback')
   .get(siteController.sendDefault)
   .post(siteController.sendDefault)
-
-router
-  .route('/colleges')
-  .get(controller.sendColleges)
 
 module.exports = router
