@@ -4,6 +4,7 @@ import PageNotFound from "../views/PageNotFound.vue"
 import Home from "../views/Home.vue"
 import Account from "../views/Account.vue"
 import AccountAdd from "../views/AccountAdd.vue"
+import ListingAdd from "../views/ListingAdd.vue"
 import VueRouter from 'vue-router'
 const localVue = createLocalVue()
 localVue.use(VueRouter)
@@ -15,6 +16,34 @@ describe("ListingList", () => {
         expect(wrapper.text()).toMatch("Buy $9.80");
         expect(wrapper.text()).toMatch("Buy $10.23");
         expect(wrapper.text()).toMatch("Buy $1.99");
+        wrapper.destroy();
+    })
+
+    it("displays the search bar when the page is instantiated", () => {
+        const wrapper = mount(ListingList, {localVue, router});
+        expect(wrapper.text()).toMatch("Please search for a book");
+        expect(wrapper.text()).toMatch("Search");
+        wrapper.destroy();
+    })
+
+    it("does not display the search alert after a user has performed a search", async () => {
+        const promise = Promise.resolve('success')
+        const wrapper = mount(ListingList, {localVue, router});
+        const search = wrapper.find("#search");
+        search.trigger('submit');
+        await promise;
+        expect(wrapper.text()).not.toMatch("Please search for a book");
+        wrapper.destroy();
+    })
+
+    it("displays different listings after a search is performed", async () => {
+        const promise = Promise.resolve('success')
+        const wrapper = mount(ListingList, {localVue, router});
+        const listings = wrapper.vm.$data.listings;
+        const search = wrapper.find("#search");
+        search.trigger('submit');
+        await promise;
+        expect(wrapper.vm.$data.listings).not.toEqual(listings);
         wrapper.destroy();
     })
 })
@@ -76,7 +105,6 @@ describe("AccountAdd", () => {
         wrapper.destroy();
     })
     it("error is displayed when there is a problem creating account", async () => {
-        let push = jest.fn();
         const wrapper = mount(AccountAdd, {localVue, router, data: function() {return {      
         username: 'test',
         email: 'test@gmail.com',
@@ -147,5 +175,48 @@ describe("AccountAdd", () => {
         await create.trigger('submit');
         expect(wrapper.vm.$data.errorMessage).toEqual("One or more fields is blank or you have an error with your input");
         wrapper.destroy();
+    })
+
+    describe("ListingAdd", () => {
+        it("displays the correct text on the page", () => {
+            const wrapper = mount(ListingAdd, {localVue, router});
+            expect(wrapper.text()).toMatch("Add Listing");
+            expect(wrapper.text()).toMatch("Look Up");
+            expect(wrapper.text()).toMatch("Asking Price");
+            wrapper.destroy();
+        })
+    
+        it("displays an error when a user searches for a book with no ISBN", async () => {
+            const promise = Promise.resolve('success')
+            const wrapper = mount(ListingAdd, {localVue, router});
+            const search = wrapper.find('#search')
+            search.trigger('click');
+            await promise;
+            expect(wrapper.vm.$data.errorMessage).toEqual("Could not find book with that ISBN.")
+            wrapper.destroy();
+        })
+    
+        it("displays an error message when the user tries to submit before entering data", async () => {
+            const promise = Promise.resolve('success')
+            const wrapper = mount(ListingAdd, {localVue, router});
+            const submit = wrapper.find("#submit");
+            submit.trigger('submit');
+            await promise;
+            expect(wrapper.vm.$data.errorMessage).toEqual("There is an issue with your input.");
+            wrapper.destroy();
+        })
+    
+        it("does not display an error when the submit button is clicked with valid data", async () => {
+            const wrapper = mount(ListingAdd, {localVue, router, data: function() {return {      
+                isbn: '1234',
+                askingPrice: 5.00
+            }}});
+            const promise = Promise.resolve('success');
+            const submit = wrapper.find("#submit");
+            submit.trigger('submit');
+            await promise;
+            expect(wrapper.vm.$data.errorMessage).not.toEqual('There was a problem adding your listing');
+            wrapper.destroy();
+        })
     })
 })

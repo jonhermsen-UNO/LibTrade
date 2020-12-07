@@ -2,8 +2,22 @@
     <div>
     <b-container fluid="lg">
         <b-row>
-            <b-col cols="12" lg="4"></b-col>
+            <b-col cols="12" lg="4">
+                <b-alert v-if="!hasSearched" variant="secondary" show>Please search for a book</b-alert>
+                <b-card class="w-100 mb-2">
+                    <b-form v-on:submit.prevent="search">
+                        <fieldset class="mx-auto w-100" style="max-width:400px">
+                            <b-form-input v-model="isbn" type="text" placeholder="ISBN"></b-form-input>
+                            <br><b-form-input v-model="title" type="text" placeholder="Title"></b-form-input>
+                            <br>
+                            <b-button id="search" style="float:right;" type="submit" class="btn btn-primary">Search</b-button>
+                            <p style="color:red; font-weight:bold;">{{errorMessage}}</p>
+                        </fieldset>
+                    </b-form>
+                </b-card>
+            </b-col>
             <b-col cols="12" lg="8">
+                <b-alert v-if="listings.length==0" variant="danger" show>No Results Found.</b-alert>
                 <b-list-group>
                     <b-list-group-item v-for="listing in listings" :key="listing.BookListingID">
                         <Listing :listingData="listing"></Listing>
@@ -23,9 +37,13 @@ Vue.use(LayoutPlugin)
 import { BListGroup, BListGroupItem } from 'bootstrap-vue'
 Vue.component('b-list-group', BListGroup)
 Vue.component('b-list-group-item', BListGroupItem)
+import { CardPlugin } from 'bootstrap-vue'
+Vue.use(CardPlugin)
+import { AlertPlugin } from 'bootstrap-vue'
+Vue.use(AlertPlugin)
 import { ImagePlugin } from 'bootstrap-vue'
 Vue.use(ImagePlugin)
-// import axios from 'axios'
+import axios from 'axios'
 export default {
   name: 'ListingList',
   components: {
@@ -34,7 +52,7 @@ export default {
   data: function() {
       return {
           listings: [
-              // axios.get("api/listing")
+//              axios.get("api/listing")
           {
               "BookListingID": 15,
               "AccountID": 2,
@@ -53,8 +71,23 @@ export default {
             "BookID": "LjUY4QQsC",
             "AskingPrice": 1.99
           }
-      ]
+      ],
+      isbn: '',
+      title: '',
+      hasSearched: false,
+      errorMessage: ''
     }
+  },
+  methods: {
+      search() {
+          this.hasSearched = true
+          const data = {
+              ISBN: this.isbn,
+              Title: this.title
+          }
+          this.listings = axios.get("api/listing", data)
+          .catch(this.errorMessage = "There was a problem performing your search.")
+      }
   }
 }
 </script>
