@@ -12,6 +12,10 @@ router
   .post(controller.authenticateAccount)
 
 router
+  .route('/logout')
+  .post(controller.deauthenticateAccount)
+
+router
   .route('/login-google')
   .get(controller.authenticateGoogle)
   .post(controller.authenticateGoogle)

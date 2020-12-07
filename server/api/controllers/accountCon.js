@@ -9,6 +9,12 @@ controller.authenticateAccount = passport.authenticate('local', {
   failureRedirect: '/hello/:not_logged_in'
 })
 
+controller.deauthenticateAccount = (request, response) => {
+  // Invalidate the account cookie if one exists.
+  request.logout()
+  return response.send()
+}
+
 controller.authenticateGoogle = passport.authenticate('google', {
   scope:['profile']
 })
