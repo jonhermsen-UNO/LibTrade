@@ -28,6 +28,7 @@ app.use(passport.session())
 // enable CORS with the client
 app.use((request, response, next) => {
   response.header('Access-Control-Allow-Origin', '*')
+  response.header('Access-Control-Allow-Headers', '*')
   next()
 })
 
