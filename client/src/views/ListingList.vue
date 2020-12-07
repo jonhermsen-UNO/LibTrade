@@ -10,7 +10,7 @@
                             <b-form-input v-model="isbn" type="text" placeholder="ISBN"></b-form-input>
                             <br><b-form-input v-model="title" type="text" placeholder="Title"></b-form-input>
                             <br>
-                            <b-button style="float:right;" type="submit" class="btn btn-primary">Search</b-button>
+                            <b-button id="search" style="float:right;" type="submit" class="btn btn-primary">Search</b-button>
                             <p style="color:red; font-weight:bold;">{{errorMessage}}</p>
                         </fieldset>
                     </b-form>
@@ -37,6 +37,10 @@ Vue.use(LayoutPlugin)
 import { BListGroup, BListGroupItem } from 'bootstrap-vue'
 Vue.component('b-list-group', BListGroup)
 Vue.component('b-list-group-item', BListGroupItem)
+import { CardPlugin } from 'bootstrap-vue'
+Vue.use(CardPlugin)
+import { AlertPlugin } from 'bootstrap-vue'
+Vue.use(AlertPlugin)
 import { ImagePlugin } from 'bootstrap-vue'
 Vue.use(ImagePlugin)
 import axios from 'axios'
