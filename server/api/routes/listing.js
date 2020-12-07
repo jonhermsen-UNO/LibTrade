@@ -4,13 +4,19 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(controller.viewListing)
+  .post(controller.viewListing)
+
+router
+  .route('/create')
   .post(controller.postListing)
-  .delete(controller.removeListing)
+
+router
+  .route('/remove')
+  .post(controller.removeListing)
 
 router
   .route('/book')
-  .get(controller.findBookByISBN)
+  .post(controller.findBookByISBN)
 
 router
   .route('/book/:BookID')
