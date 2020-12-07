@@ -53,7 +53,8 @@ export default {
           let data = {
               ISBN: this.isbn
           }
-          this.book = axios.post("/api/listing/book", data)
+          axios.post("/api/listing/book", data)
+          .then((response) => { this.book = response.data })
           .catch(this.errorMessage = "Could not find book with that ISBN.")
       }
   }
