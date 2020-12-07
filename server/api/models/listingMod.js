@@ -35,6 +35,3 @@ model.updatePrice = (price) => {
 model.updateUserID = (id) => {
     model.userID = id
 }*/
-
-
-module.exports = model
