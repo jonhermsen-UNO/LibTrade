@@ -17,7 +17,6 @@ router
 
 router
   .route('/login-google')
-  .get(controller.authenticateGoogle)
   .post(controller.authenticateGoogle)
 
 router
