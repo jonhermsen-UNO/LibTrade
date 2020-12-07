@@ -2,24 +2,19 @@ const controller = require('../controllers/listingCon')
 const express = require('express')
 const router = express.Router()
 
-
 router
-.route('/book')
+  .route('/')
   .get(controller.viewListing)
-
-router
-.route('/create')
-  //.get(controller.createListing)
   .post(controller.postListing)
+  .delete(controller.removeListing)
 
 router
-.route('/view')
-    .get(controller.viewListing)
-    .post(controller.viewListing)
+  .route('/book')
+  .get(controller.findBookByISBN)
 
 router
-.route('/remove')
-    .get(controller.viewListing)
-    .post(controller.removeListing)
+  .route('/book/:BookID')
+  .get(controller.findBookById)
+
 
 module.exports = router
