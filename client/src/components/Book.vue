@@ -4,7 +4,7 @@
             <b-col cols="4" class="text-right">
                 <b-img :src=bookData.ThumbnailURL fluid/>
             </b-col>
-            <b-col cols="8">
+            <b-col cols="8" class="text-left">
                 <h2 class="text-primary">{{bookData.Title}}</h2>
                 <div class="lead">{{bookData.Publisher}}, {{bookData.PublishYear}}</div>
                 <div>{{bookData.Author}}<br>
