@@ -11,6 +11,7 @@
                 <b-nav-item id="home" href='/'>Home</b-nav-item>
                 <b-nav-item id="register" href='/register'>Register</b-nav-item>
                 <b-nav-item id="listings" href='/listings'>Book Listings</b-nav-item>
+                <b-nav-item id="addListing" href='/listings/add'>Add Listing</b-nav-item>
             </b-navbar-nav>
             <b-navbar-nav class='ml-auto'>
                 <b-button v-if="username != ''" id="logout" v-on:click="logout" style="position:absolute; right:20px; top:20px">Log Out</b-button>
