@@ -18,7 +18,16 @@ controller.registerAccount = (request, response) => {
   response.render('register')
 }
 
+controller.sendAccountDetails = (request, response) => {
+  // TODO: implement with live data
+  response.json({
+    AccountID: 2,
+    Username: "JDoe"
+  })
+}
+
 controller.sendColleges = (request, response) => {
   response.send('colleges')
 }
+
 module.exports = controller

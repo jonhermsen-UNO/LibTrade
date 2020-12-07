@@ -5,7 +5,7 @@ const router = express.Router()
 
 router
   .route('/')
-  .post(controller.authenticateAccount)
+  .get(controller.sendAccountDetails)
 
 router
   .route('/login')
