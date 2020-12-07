@@ -5,12 +5,10 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(controller.authenticateAccount)
   .post(controller.authenticateAccount)
 
 router
   .route('/login')
-  .get(controller.authenticateAccount)
   .post(controller.authenticateAccount)
 
 router
