@@ -57,7 +57,7 @@ controller.removeListing = function(req, res){
 
 //Finds book from google books api by book id
 controller.findBookById = (req, res) => {
-  const URI = `https://www.googleapis.com/books/v1/volumes/${req.body.searchQuery}`;
+  const URI = `https://www.googleapis.com/books/v1/volumes/${req.params.BookID}`;
   axios.get(URI, {responseType: "json", method:"get"}).then((data) => {
       res.send(data.data); 
       //TODO: Still need to format it into a book object
@@ -70,7 +70,7 @@ controller.findBookById = (req, res) => {
 //Searchs for book with name matching search query.
 //Returns book array where searchquery exists in name anywhere
 controller.findBookByISBN = (req, res) => {
-  const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${req.body.searchQuery}`;
+  const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${req.body.ISBN}`;
   axios.get(URI, {responseType: "json", method:"get"}).then((data) => {
       res.send(data.data.items);
       //TODO: Still need to format it into a book object
