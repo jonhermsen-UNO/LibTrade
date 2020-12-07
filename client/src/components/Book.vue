@@ -16,7 +16,7 @@
 </template>
 
 <script>
-//import axios from 'axios'
+import axios from 'axios'
 import Vue from 'vue';
 import { LayoutPlugin } from 'bootstrap-vue'
 Vue.use(LayoutPlugin)
@@ -24,20 +24,12 @@ export default {
   name: 'Book',
   data: function() {
     return {
-       // bookData: axios.get("/api/listing/book/" + this.id)
-        bookData: {
-            "BookID": "Lj-4ZUY4QQsC",
-            "CacheDate": "2020-11-18",
-            "PublishYear": 2005,
-            "Publisher": "Cengage Learning",
-            "Title": "Calculus",
-            "Author": "Ron Larson, Robert P. Hostetler, Bruce Edwards",
-            "ISBN10": "061850298X",
-            "ISBN13": "9780618502981",
-            "RetailPrice": 12.90,
-            "ThumbnailURL": "https://homepages.cae.wisc.edu/~ece533/images/airplane.png"
-        }
+        bookData: {}
     }
+  },
+  created () {
+      axios.get(`/api/listing/book/${this.id}`)
+      .then((response) => { this.bookData = response.data })
   },
   props: {
       id: String
