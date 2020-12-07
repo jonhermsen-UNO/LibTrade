@@ -5,6 +5,34 @@ const passport = require('passport')
 const axios = require('axios').default;
 const controller = {}
 
+// Transform Google Book data to match the LibTrade schema
+function transformBook(obj) {
+  const Book = {}
+  Book.BookID = obj.id
+  if (obj.volumeInfo) {
+    Book.PublishYear = parseInt(obj.volumeInfo.publishedDate.substring(0, 4) , 10)
+    Book.Publisher = obj.volumeInfo.publisher
+    Book.Title = obj.volumeInfo.title
+    if (obj.volumeInfo.subtitle) Book.Title += ": " + obj.volumeInfo.subtitle
+    Book.Author = obj.volumeInfo.authors.join(", ")
+    if (obj.volumeInfo.industryIdentifiers) {
+      obj.volumeInfo.industryIdentifiers.forEach(objID => {
+        if (objID.type === "ISBN_10") Book.ISBN10 = objID.identifier
+        if (objID.type === "ISBN_13") Book.ISBN13 = objID.identifier
+      })
+    }
+    if (obj.volumeInfo.imageLinks) Book.ThumbnailURL = obj.volumeInfo.imageLinks.thumbnail
+  }
+  if (obj.saleInfo &&
+      obj.saleInfo.retailPrice &&
+      obj.saleInfo.retailPrice.currencyCode === "USD") {
+    Book.RetailPrice = obj.saleInfo.retailPrice.amount
+  } else {
+    Book.RetailPrice = 0
+  }
+  return Book
+}
+
 //gets listing form to create listing
  /*controller.createListing = function(req, res){
    res.send("createListing not yet implemented (GET)");
@@ -59,8 +87,8 @@ controller.removeListing = function(req, res){
 controller.findBookById = (req, res) => {
   const URI = `https://www.googleapis.com/books/v1/volumes/${req.params.BookID}`;
   axios.get(URI, {responseType: "json", method:"get"}).then((data) => {
-      res.send(data.data); 
-      //TODO: Still need to format it into a book object
+    // TODO: use cache-only approach
+    res.send(transformBook(data.data))
   }).catch((err) => {
       console.log(err);
       res.send(`Error: ${err}`)
@@ -70,10 +98,14 @@ controller.findBookById = (req, res) => {
 //Searchs for book with name matching search query.
 //Returns book array where searchquery exists in name anywhere
 controller.findBookByISBN = (req, res) => {
+  // TODO: use cache-first approach
   const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${req.body.ISBN}`;
   axios.get(URI, {responseType: "json", method:"get"}).then((data) => {
-      res.send(data.data.items);
-      //TODO: Still need to format it into a book object
+      if (!data.data.items) {
+        res.status(400).send("No book by ISBN")
+      } else {
+        res.send(transformBook(data.data.items[0]))
+      }
   }).catch((err) => {
       res.send(`Error: ${err}`)
   });
