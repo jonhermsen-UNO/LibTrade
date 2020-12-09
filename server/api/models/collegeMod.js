@@ -1,19 +1,16 @@
-const model = {}
-
-model.id = ''
-model.name = ''
-model.state = ''
-
-model.updateID = (id) => {
-  model.id = id
-}
-
-model.updateName = (name) => {
-  model.name = name
-}
-
-model.updateState = (state) => {
-  model.state = state
-}
+const { Sequelize, DataTypes } = require('sequelize');
+const db = require('../../lib/dbconn')
+const sequelize = new Sequelize(db);
+const model = sequelize.define('College',{
+  CollegeID:{
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  },
+  Address: DataTypes.STRING,
+  City: DataTypes.STRING,
+  State: DataTypes.STRING,
+  Zip: DataTypes.STRING
+})
 
 module.exports = model
