@@ -21,6 +21,7 @@
                 <b-list-group>
                     <b-list-group-item v-for="listing in listings" :key="listing.BookListingID">
                         <Listing :listingData="listing"></Listing>
+                        <b-button v-if="listing.AccountID == accountID" id="remove" v-on:click="remove(listing)">Remove This Listing</b-button>
                     </b-list-group-item>
                 </b-list-group>
             </b-col>
@@ -51,35 +52,37 @@ export default {
   },
     mounted: function() {
     this.getUserData();
+    this.getListings();
   },
   data: function() {
       return {
-          listings: [
-//              axios.get("api/listing")
-          {
-              "BookListingID": 15,
-              "AccountID": 2,
-              "BookID": "Lj-4ZUY4QQsC",
-              "AskingPrice": 9.80
-          },
-          {
-            "BookListingID": 10,
-            "AccountID": 2,
-            "BookID": "Lj-4ZUY4QQC",
-            "AskingPrice": 10.23
-          },
-          {
-            "BookListingID": 12,
-            "AccountID": 2,
-            "BookID": "LjUY4QQsC",
-            "AskingPrice": 1.99
-          }
-      ],
+          listings: [],
+    //       listings: [
+    //       {
+    //           "BookListingID": 15,
+    //           "AccountID": 2,
+    //           "BookID": "Lj-4ZUY4QQsC",
+    //           "AskingPrice": 9.80
+    //       },
+    //       {
+    //         "BookListingID": 10,
+    //         "AccountID": 2,
+    //         "BookID": "Lj-4ZUY4QQC",
+    //         "AskingPrice": 10.23
+    //       },
+    //       {
+    //         "BookListingID": 12,
+    //         "AccountID": 2,
+    //         "BookID": "LjUY4QQsC",
+    //         "AskingPrice": 1.99
+    //       }
+    //   ],
       isbn: '',
       title: '',
       hasSearched: false,
       errorMessage: '',
-      username: null
+      username: null,
+      accountID: null
     }
   },
   methods: {
@@ -92,9 +95,22 @@ export default {
           this.listings = axios.get("api/listing", data)
           .catch(this.errorMessage = "There was a problem performing your search.")
       },
+      remove(listing) {
+          const data = {
+              BookListingID: listing.BookListingID
+          }
+          axios.post("api/listing/remove", data)
+          .then(this.getListings())
+          .catch((error) => console.log(error));
+      },
+      getListings() {
+          axios.post("api/listing")
+        .then((response) => this.listings = response.data)
+        .catch((error) => console.log(error));
+      },
     getUserData() {
       axios.get("/api/account")
-      .then((response) => this.username = response.data.Username)
+      .then((response) => { this.username = response.data.Username; this.accountID = response.data.AccountID;})
       .catch((error) => {console.log(error); this.$router.push('/login')})
     }
   }
