@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-button variant="info" class="float-right">Buy ${{listingData.AskingPrice.toFixed(2)}}</b-button>
+        <b-button v-b-modal="'modal' + listingData.BookListingID" variant="info" class="float-right">Buy ${{listingData.AskingPrice.toFixed(2)}}</b-button>
         <Book :id=listingData.BookID></Book><br>
     </div>
 </template>

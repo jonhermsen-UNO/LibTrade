@@ -42,7 +42,7 @@ export default {
   },
   methods: {
       onSubmit() {
-        if (this.isbn == '' || this.askingprice <= 0) this.errorMessage = "There is an issue with your input."
+        if (this.isbn == '' || this.askingprice <= 0 || this.errorMessage != '') this.errorMessage = "There is an issue with your input."
         else {
             let data = {
                 BookID: this.bookid,
