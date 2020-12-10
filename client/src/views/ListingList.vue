@@ -49,6 +49,10 @@ export default {
   components: {
       Listing
   },
+    mounted: function() {
+    this.getUserData();
+    if (this.username == '') this.$router.push('/login')
+  },
   data: function() {
       return {
           listings: [
@@ -75,7 +79,8 @@ export default {
       isbn: '',
       title: '',
       hasSearched: false,
-      errorMessage: ''
+      errorMessage: '',
+      username: ''
     }
   },
   methods: {
@@ -87,7 +92,12 @@ export default {
           }
           this.listings = axios.get("api/listing", data)
           .catch(this.errorMessage = "There was a problem performing your search.")
-      }
+      },
+    getUserData() {
+      axios.get("/api/account")
+      .then((response) => this.username = response.data.Username)
+      .catch((error) => console.log(error))
+    }
   }
 }
 </script>

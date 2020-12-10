@@ -48,7 +48,7 @@ export default {
       if (this.username == "" || this.password == "") this.errorMessage = "One or more fields is blank"
       else { 
           axios.post("/auth/google/redirect", data)
-          .then(this.$router.push('/'))
+          .then(this.$router.go('-1'))
           .catch(this.errorMessage = "Invalid credentials")
       }
     }

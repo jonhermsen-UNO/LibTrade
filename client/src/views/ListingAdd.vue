@@ -33,8 +33,13 @@ export default {
           askingprice: '',
           isbn: '',
           errorMessage: '',
-          book: {}
+          book: {},
+          username: ''
     }
+  },
+    mounted: function() {
+    this.getUserData();
+    if (this.username == '') this.$router.push('/login')
   },
   methods: {
       onSubmit() {
@@ -49,14 +54,19 @@ export default {
             .catch(this.errorMessage = "There was a problem adding your listing.")
         }
       },
-      searchBook() {
+    searchBook() {
           let data = {
               ISBN: this.isbn
           }
           axios.post("/api/listing/book", data)
           .then((response) => { this.book = response.data })
           .catch(this.errorMessage = "Could not find book with that ISBN.")
-      }
+      },
+    getUserData() {
+      axios.get("/api/account")
+      .then((response) => this.username = response.data.Username)
+      .catch((error) => console.log(error))
+    }
   }
 }
 </script>

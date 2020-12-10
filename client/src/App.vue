@@ -26,8 +26,8 @@ export default {
   },
   methods: {
     getUserData() {
-      axios.get("/api/user")
-      .then((response) => self.$set(this, "username", response.data.user))
+      axios.get("/api/account")
+      .then((response) => this.username = response.data.Username)
       .catch((error) => console.log(error))
     }
   }

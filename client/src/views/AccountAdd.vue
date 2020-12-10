@@ -65,7 +65,7 @@ Vue.component('b-form-select', BFormSelect)
 export default {
   name: 'AccountAdd',
   created: function() {
-    //this.collegeList = axios.get("/api/account/colleges");
+    // axios.get("/api/account/colleges").then((response) => this.collegeList = response.data)
   },
   data: function() {
     return {
@@ -115,7 +115,8 @@ export default {
         if (this.uniqueUsername(this.username) && this.emailValid(this.email) && this.emailUnique(this.email) 
         && this.emailsMatch(this.email, this.verifyEmail) && this.passwordsMatch(this.password, this.verifyPassword)) {
           axios.post("/api/account/register", data)
-          .then(this.$router.push('/'))
+          .then(axios.post("/auth/google/redirect", data))
+          .then(this.$router.go('-1'))
           .catch(this.errorMessage = "There was a problem creating your account.")
         }
         else {
