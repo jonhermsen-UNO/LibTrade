@@ -34,12 +34,11 @@ export default {
           isbn: '',
           errorMessage: '',
           book: {},
-          username: ''
+          username: null
     }
   },
     mounted: function() {
     this.getUserData();
-    if (this.username == '') this.$router.push('/login')
   },
   methods: {
       onSubmit() {
@@ -65,7 +64,7 @@ export default {
     getUserData() {
       axios.get("/api/account")
       .then((response) => this.username = response.data.Username)
-      .catch((error) => console.log(error))
+      .catch((error) => {console.log(error); this.$router.push('/login')})
     }
   }
 }

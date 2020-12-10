@@ -51,7 +51,6 @@ export default {
   },
     mounted: function() {
     this.getUserData();
-    if (this.username == '') this.$router.push('/login')
   },
   data: function() {
       return {
@@ -80,7 +79,7 @@ export default {
       title: '',
       hasSearched: false,
       errorMessage: '',
-      username: ''
+      username: null
     }
   },
   methods: {
@@ -96,7 +95,7 @@ export default {
     getUserData() {
       axios.get("/api/account")
       .then((response) => this.username = response.data.Username)
-      .catch((error) => console.log(error))
+      .catch((error) => {console.log(error); this.$router.push('/login')})
     }
   }
 }

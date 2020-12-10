@@ -14,7 +14,7 @@
                 <b-nav-item id="addListing" href='/listings/add'>Add Listing</b-nav-item>
             </b-navbar-nav>
             <b-navbar-nav class='ml-auto'>
-                <b-button v-if="username != ''" id="logout" v-on:click="logout" style="position:absolute; right:20px; top:20px">Log Out</b-button>
+                <b-button v-if="username != null" id="logout" v-on:click="logout" style="position:absolute; right:20px; top:20px">Log Out</b-button>
                 <b-button v-else id="login" href='/login'>Log In</b-button>
             </b-navbar-nav>
         </b-collapse>
@@ -40,10 +40,11 @@ export default {
             const data = {
                 username: this.username,
             }
-            axios.post("/api/account/logout", data);
+            axios.post("/api/account/logout", data)
+            .then(this.username = null);
         },
         login() {
-            this.$router.push('login');
+            this.$router.push('/login');
         }
     }
 }

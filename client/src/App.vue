@@ -18,7 +18,7 @@ export default {
   },
   data: function() {
     return {
-      username: ''
+      username: null
     }
   },
   mounted: function() {
