@@ -5,21 +5,45 @@ import Home from "../views/Home.vue"
 import Account from "../views/Account.vue"
 import AccountAdd from "../views/AccountAdd.vue"
 import ListingAdd from "../views/ListingAdd.vue"
+import Listing from "../components/Listing.vue"
 import VueRouter from 'vue-router'
 const localVue = createLocalVue()
 localVue.use(VueRouter)
 const router = new VueRouter()
 
 describe("ListingList", () => {
-    it("lists all of the correct data for the listings", () => {
+   it("lists all of the correct data for the listings", async () => {
         const wrapper = mount(ListingList, {localVue, router});
+        const listingData1 = {
+                "BookListingID": 10,
+                "AccountID": 2,
+                "BookID": "Lj-4ZUY4QQC",
+                "AskingPrice": 10.23
+        }
+        const listing1 = mount(Listing, {localVue, router, propsData: {listingData: listingData1}});
+        const listingData2 = {
+            "BookListingID": 10,
+            "AccountID": 2,
+            "BookID": "Lj-4ZUY4QQC",
+            "AskingPrice": 9.80
+        }
+        const listing2 = mount(Listing, {localVue, router, propsData: {listingData: listingData2}});
+        const listingData3 = {
+            "BookListingID": 10,
+            "AccountID": 2,
+            "BookID": "Lj-4ZUY4QQC",
+            "AskingPrice": 1.99
+        }
+        const listing3 = mount(Listing, {localVue, router, propsData: {listingData: listingData3}});
+        const listings = [listing1, listing2, listing3]
+        wrapper.vm.$data.listings = listings;
         expect(wrapper.text()).toMatch("Buy $9.80");
         expect(wrapper.text()).toMatch("Buy $10.23");
         expect(wrapper.text()).toMatch("Buy $1.99");
         wrapper.destroy();
     })
 
-    it("displays the search bar when the page is instantiated", () => {
+    it("displays the search bar when the page is instantiated", async () => {
         const wrapper = mount(ListingList, {localVue, router});
         expect(wrapper.text()).toMatch("Please search for a book");
         expect(wrapper.text()).toMatch("Search");
@@ -35,16 +59,12 @@ describe("ListingList", () => {
         expect(wrapper.text()).not.toMatch("Please search for a book");
         wrapper.destroy();
     })
-
-    it("displays different listings after a search is performed", async () => {
-        const promise = Promise.resolve('success')
+    it ("displays a pop-up to buy when the Buy button is clicked", () => {
         const wrapper = mount(ListingList, {localVue, router});
-        const listings = wrapper.vm.$data.listings;
-        const search = wrapper.find("#search");
-        search.trigger('submit');
-        await promise;
-        expect(wrapper.vm.$data.listings).not.toEqual(listings);
-        wrapper.destroy();
+        const buy = wrapper.find('#buy');
+        buy.trigger('click');
+        // Fails if it does not find the pop-up
+        wrapper.find('modal')
     })
 })
 
@@ -218,5 +238,5 @@ describe("AccountAdd", () => {
             expect(wrapper.vm.$data.errorMessage).not.toEqual('There was a problem adding your listing');
             wrapper.destroy();
         })
-    })
+   })
 })

@@ -24,7 +24,13 @@ export default {
   name: 'Book',
   data: function() {
     return {
-        bookData: {}
+        bookData: {
+            ISBN10: '061850298X',
+            ISBN13: '9780618502981',
+            Title: 'Calculus Cengage Learning, 2005',
+            Author: 'Ron Larson, Robert P. Hostetler, Bruce Edwards',
+            RetailPrice: 12.90
+        }
     }
   },
   created () {

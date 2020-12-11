@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-button v-b-modal="'modal' + listingData.BookListingID" variant="info" class="float-right">Buy ${{listingData.AskingPrice.toFixed(2)}}</b-button>
+        <b-button id="buy" v-b-modal="'modal' + listingData.BookListingID" variant="info" class="float-right">Buy ${{listingData.AskingPrice.toFixed(2)}}</b-button>
         <Book :id=listingData.BookID></Book><br>
     </div>
 </template>
@@ -10,10 +10,15 @@ import Book from '../components/Book.vue'
 import Vue from 'vue'
 import { ButtonPlugin } from 'bootstrap-vue'
 Vue.use(ButtonPlugin)
+import { VBModal } from 'bootstrap-vue'
+Vue.component('v-b-modal', VBModal)
 export default {
   name: 'Listing',
   components: {
       Book
+  },
+  directives: { 
+    'b-modal': VBModal 
   },
   props: {
     listingData: {

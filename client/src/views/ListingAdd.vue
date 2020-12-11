@@ -64,7 +64,7 @@ export default {
     getUserData() {
       axios.get("/api/account")
       .then((response) => this.username = response.data.Username)
-      .catch((error) => {console.log(error); this.$router.push('/login')})
+      .catch(this.$router.push('/login'))
     }
   }
 }

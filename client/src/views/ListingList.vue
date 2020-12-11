@@ -64,6 +64,8 @@ import { AlertPlugin } from 'bootstrap-vue'
 Vue.use(AlertPlugin)
 import { ImagePlugin } from 'bootstrap-vue'
 Vue.use(ImagePlugin)
+import { BModal } from 'bootstrap-vue'
+Vue.component('b-modal', BModal)
 import axios from 'axios'
 export default {
   name: 'ListingList',
@@ -139,13 +141,12 @@ export default {
         this.popupErrorMessage = 'There is an error with your input'
         else this.remove(listing);
     },
-      getListings() {
-          axios.post("api/listing")
+     async getListings() {
+          await axios.post("api/listing")
         .then((response) => this.listings = response.data)
-        .catch((error) => console.log(error));
       },
-    getUserData() {
-      axios.get("/api/account")
+    async getUserData() {
+      await axios.get("/api/account")
       .then((response) => { this.username = response.data.Username; this.accountID = response.data.AccountID;})
       .catch((error) => {console.log(error); this.$router.push('/login')})
     },
