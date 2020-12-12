@@ -88,6 +88,9 @@ export default {
       errorMessage: '',
     }
   },
+  mounted: function() {
+    this.getColleges();
+  },
   methods: {
     uniqueUsername(username) {
       return username != '';
@@ -122,8 +125,13 @@ export default {
         else {
           this.errorMessage = "One or more fields is blank or you have an error with your input";
         }
+    },
+    getColleges() {
+      axios
+        .get('/api/account/colleges')
+        .then((response) => (this.collegeList = response.data))
+        .catch((error) => (console.log(error)))
     }
-
   }
 }
 </script>

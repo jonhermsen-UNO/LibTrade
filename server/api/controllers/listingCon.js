@@ -40,21 +40,17 @@ function transformBook(obj) {
 
  //gets listing from db to view listing
 controller.viewListing = function(req, res){
-  listingModel.findOne({
-    where:{
-      AccountID: req.body.AccountID,
-      BookID: req.body.BookID,
-      AskingPrice: req.body.AskingPrice
-    }}).then(
-    function(listing){
-      if(listing){
-        return res.send(listing);
-      }
-      else{
-        return res.send('no listing available');
-      }
-    }
-  )
+  let where = {};
+
+  if (req.body.BookID) where.BookID = req.body.BookID;
+  if (req.body.AskingPrice) where.AskingPrice = req.body.AskingPrice;
+
+  listingModel.findAll({
+    where: where
+  }).then((listings) => {
+    if (!listings) return res.status(401).send('no listing available')
+    return res.json(listings)
+  })
 };
 
 //posts listing made with listing form to db
@@ -63,13 +59,12 @@ controller.postListing = function(req, res){
     AccountID: req.body.AccountID,
     BookID: req.body.BookID,
     AskingPrice: req.body.AskingPrice
-  }).then(
-    function(posted){
+  }).then((posted) => {
       if(posted){
         return res.send(posted);
       }
       else{
-        return res.send('unable to create listing');
+        return res.status(401).send('unable to create listing');
       }
     }
   )
@@ -77,7 +72,22 @@ controller.postListing = function(req, res){
 
 //posts removal request for listing, listing is removed from db
 controller.removeListing = function(req, res){
-  res.send("viewListing not yet implemented (POST)");
+  listingModel.destroy({
+    where:{
+      AccountID: req.body.AccountID,
+      BookID: req.body.BookID,
+      AskingPrice: req.body.AskingPrice
+    }}).then(
+      function(destroyed){
+        if(destroyed){
+          return res.send(destroyed);
+        }
+        else{
+          return res.status(401).send("unable to remove listing");
+        }
+
+      }
+    )
 };
 
 

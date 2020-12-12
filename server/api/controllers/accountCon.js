@@ -33,7 +33,12 @@ controller.sendAccountDetails = (request, response) => {
 }
 
 controller.sendColleges = (request, response) => {
-  response.send('colleges')
+  collegeModel
+    .findAll()
+    .then((colleges) => {
+      if (!colleges) response.status(400).send('No colleges available')
+      response.json(colleges)
+    })
 }
 
 module.exports = controller
