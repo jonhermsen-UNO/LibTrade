@@ -1,7 +1,15 @@
 const accountModel = require('../models/accountMod')
 const collegeModel = require('../models/collegeMod')
 const passport = require('passport')
+const bcrypt = require('bcrypt')
 const controller = {}
+
+function passwordHash(passwordClear) {
+  // HT: https://www.npmjs.com/package/bcrypt#a-note-on-rounds
+  const saltRounds = 10
+  const salt = bcrypt.genSaltSync(saltRounds);
+  return bcrypt.hashSync(passwordClear, salt);
+}
 
   //logging in
 controller.authenticateAccount = passport.authenticate('local', {
@@ -32,7 +40,7 @@ controller.registerAccount = (request, response) => {
       CollegeID: request.body.CollegeID,
       Email: request.body.Email,
       Username: request.body.Username,
-      Password: request.body.Password
+      Password: passwordHash(request.body.Password)
     })
     .then(() => {
       response.send('Success: account created successfully')
