@@ -122,9 +122,4 @@ controller.findBookByISBN = (req, res) => {
   });
 }
 
-//keys.google.apiKey is not being used here due to 503 error
-//It still works but I'll look into it.
-//The key would be appended at the end of the URI:
-//  &key=API KEY HERE
-
 module.exports = controller
