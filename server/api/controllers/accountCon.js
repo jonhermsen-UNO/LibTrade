@@ -34,7 +34,12 @@ controller.sendAccountDetails = (request, response) => {
 
 controller.sendColleges = (request, response) => {
   collegeModel
-    .findAll()
+    .findAll({
+      order: [
+        ['State', 'ASC'],
+        ['Name', 'ASC']
+      ]
+    })
     .then((colleges) => {
       if (!colleges) response.status(400).send('No colleges available')
       response.json(colleges)
