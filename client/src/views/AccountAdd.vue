@@ -37,7 +37,7 @@
         <div class="invalid-feedback">Passwords do not match</div>      
       </b-form-group>    
       <b-form-group label="Select College" label-for="college">
-        <b-form-select id="college" v-model="college" :options="collegeList"></b-form-select>  
+        <b-form-select id="college" v-model="college" :options="collegeList" value-field="CollegeID"></b-form-select>  
       </b-form-group>
       <b-form-group v-if="college=='Other'" label="Enter College" label-for="enterCollege">
         <b-form-input id="enterCollege" type="text" placeholder="Enter College Name"></b-form-input>
@@ -74,11 +74,7 @@ export default {
       emailTakenMessage: 'An account already exists with this email address',
       emailsNotMatchedMessage: 'Emails do not match',
       passwordsNotMatchedMessage: 'Passwords do not match',
-      // Fake data for now
-      collegeList: [
-        {text: 'University Of Nebraska at Omaha', value: 'University of Nebraska at Omaha'}, 
-        {text: 'Iowa State', value: 'Iowa State'}, {text: 'Other', value: 'Other'}
-      ],
+      collegeList: [],
       username: '',
       email: '',
       verifyEmail: '',
@@ -129,7 +125,12 @@ export default {
     getColleges() {
       axios
         .get('/api/account/colleges')
-        .then((response) => (this.collegeList = response.data))
+        .then((response) => {
+          if (response.data) response.data.map(obj => {
+            obj.text = `${ obj.State } - ${ obj.Name }`;
+          });
+          this.collegeList = response.data;
+        })
         .catch((error) => (console.log(error)))
     }
   }
