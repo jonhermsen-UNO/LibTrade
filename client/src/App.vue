@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="d-flex flex-column h-100">
-    <NavBar v-bind:username="username"></NavBar>
+    <NavBar v-bind:Username="Username"></NavBar>
     <router-view class="flex-grow-1 my-3"/>
     <Footer/>
   </div>
@@ -18,7 +18,7 @@ export default {
   },
   data: function() {
     return {
-      username: null
+      Username: null
     }
   },
   mounted: function() {
@@ -27,7 +27,9 @@ export default {
   methods: {
     getUserData() {
       axios.get("/api/account")
-      .then((response) => this.username = response.data.Username)
+      .then((response) => {
+        this.Username = response.data.Username;
+      })
       .catch((error) => console.log(error))
     }
   }

@@ -9,7 +9,7 @@
                 <div class="lead">{{bookData.Publisher}}, {{bookData.PublishYear}}</div>
                 <div>{{bookData.Author}}<br>
                 ISBN: {{bookData.ISBN10}} / {{bookData.ISBN13}}<br>
-                Retail: ${{bookData.RetailPrice.toFixed(2)}}</div>
+                Retail: ${{bookData.RetailPrice}}</div>
             </b-col>
         </b-row>
     </div>
@@ -24,13 +24,14 @@ export default {
   name: 'Book',
   data: function() {
     return {
-        bookData: {
-            ISBN10: '061850298X',
-            ISBN13: '9780618502981',
-            Title: 'Calculus Cengage Learning, 2005',
-            Author: 'Ron Larson, Robert P. Hostetler, Bruce Edwards',
-            RetailPrice: 12.90
-        }
+        bookData: {}
+        // bookData: {
+        //     ISBN10: '061850298X',
+        //     ISBN13: '9780618502981',
+        //     Title: 'Calculus Cengage Learning, 2005',
+        //     Author: 'Ron Larson, Robert P. Hostetler, Bruce Edwards',
+        //     RetailPrice: 12.90
+        // }
     }
   },
   created () {

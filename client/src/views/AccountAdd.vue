@@ -85,6 +85,7 @@ export default {
     }
   },
   mounted: function() {
+    this.getUserData();
     this.getColleges();
   },
   methods: {
@@ -118,9 +119,20 @@ export default {
         && this.emailsMatch(this.Email, this.verifyEmail)
         && this.passwordsMatch(this.Password, this.verifyPassword)) {
         axios.post("/api/account/register", data)
-          .catch(this.errorMessage = "There was a problem creating your account.")
+          .then(() => {
+            axios.post("/api/account/login", data)
+            .then(this.$router.push('/'))
+            .catch((error) => {
+              this.errorMessage = error.response.data;
+            })
+          })
+          .catch((error) => {
+            if (error.response.data == 'Error: cannot create user account - username or email exists')
+            this.errorMessage = 'An account with this username or email already exists'
+            else this.errorMessage = error.response.data;
+          })
       }
-        else {
+      else {
           this.errorMessage = "One or more fields is blank or you have an error with your input";
         }
     },
@@ -134,6 +146,12 @@ export default {
           this.collegeList = response.data;
         })
         .catch((error) => (console.log(error)))
+    },
+    getUserData() {
+      axios.get("/api/account")
+      // Redirect to homepage if logged in
+      .then(this.$router.push('/'))
+      .catch() // Otherwise stay on page
     }
   }
 }

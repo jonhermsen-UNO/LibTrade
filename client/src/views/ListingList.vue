@@ -78,27 +78,7 @@ export default {
   },
   data: function() {
       return {
-         // listings: [],
-          listings: [
-          {
-              "BookListingID": 19,
-              "AccountID": 2,
-              "BookID": "Lj-4ZUY4QQsC",
-              "AskingPrice": 9.80
-          },
-          {
-            "BookListingID": 18,
-            "AccountID": 3,
-            "BookID": "Lj-4ZUY4QQC",
-            "AskingPrice": 10.23
-          },
-          {
-            "BookListingID": 15,
-            "AccountID": 6,
-            "BookID": "LjUY4QQsC",
-            "AskingPrice": 1.99
-          }
-      ],
+    listings: [],
       isbn: '',
       title: '',
       hasSearched: false,
@@ -124,16 +104,18 @@ export default {
               ISBN: this.isbn,
               Title: this.title
           }
-          this.listings = axios.post("api/listing", data)
+          this.listings = axios.post("api/listing/book", data)
           .catch(this.errorMessage = "There was a problem performing your search.")
       },
       remove(listing) {
           const data = {
-              BookListingID: listing.BookListingID
+            AccountID: listing.AccountID,
+            BookID: listing.BookID,
+            AskingPrice: listing.AskingPrice
           }
           axios.post("api/listing/remove", data)
           .then(this.getListings())
-          .catch((error) => console.log(error));
+          .catch((error) => console.log(error.response));
       },
     purchase(listing) {
         if (this.creditCardData.number == '' || this.creditCardData.name == '' || this.creditCardData.expMonth == 0
@@ -141,12 +123,12 @@ export default {
         this.popupErrorMessage = 'There is an error with your input'
         else this.remove(listing);
     },
-     async getListings() {
-          await axios.post("api/listing")
+    getListings() {
+        axios.post("api/listing")
         .then((response) => this.listings = response.data)
       },
-    async getUserData() {
-      await axios.get("/api/account")
+    getUserData() {
+     axios.get("/api/account")
       .then((response) => { this.username = response.data.Username; this.accountID = response.data.AccountID;})
       .catch((error) => {console.log(error); this.$router.push('/login')})
     },

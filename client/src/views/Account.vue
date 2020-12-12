@@ -49,10 +49,7 @@ export default {
         this.errorMessage = "One or more fields is blank";
       } else {
           axios.post("/api/account/login", data)
-            .then((response) => {
-                console.log(response);
-            })
-            // .then(this.$router.go('-1'))
+            .then(this.$router.push('/'))
             .catch(() => {
               this.errorMessage = "Invalid credentials"
             })

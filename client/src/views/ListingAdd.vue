@@ -34,7 +34,8 @@ export default {
           isbn: '',
           errorMessage: '',
           book: {},
-          username: null
+          username: null,
+          AccountID: null
     }
   },
     mounted: function() {
@@ -42,13 +43,14 @@ export default {
   },
   methods: {
       onSubmit() {
-        if (this.isbn == '' || this.askingprice <= 0 || this.errorMessage != '') this.errorMessage = "There is an issue with your input."
+        if (!this.book.BookID || this.askingprice <= 0 || this.errorMessage != '') this.errorMessage = "There is an issue with your input."
         else {
             let data = {
-                BookID: this.bookid,
-                AskingPrice: this.askingprice
+                BookID: this.book.BookID,
+                AskingPrice: this.askingprice,
+                AccountID: this.AccountID
             }
-            axios.post("/api/listing", data)
+            axios.post("/api/listing/create", data)
             .then(this.$router.push('/listings'))
             .catch(this.errorMessage = "There was a problem adding your listing.")
         }
@@ -58,7 +60,7 @@ export default {
               ISBN: this.isbn
           }
           axios.post("/api/listing/book", data)
-          .then((response) => { this.book = response.data })
+          .then((response) => { this.book = response.data; this.errorMessage = '' })
           .catch(() => {
               this.errorMessage = "Could not find book with that ISBN.";
               this.book = {}
@@ -66,7 +68,7 @@ export default {
       },
     getUserData() {
       axios.get("/api/account")
-      .then((response) => this.username = response.data.Username)
+      .then((response) => {this.username = response.data.Username; this.AccountID = response.data.AccountID})
       .catch(() => { this.$router.push('/login') })
     }
   }
