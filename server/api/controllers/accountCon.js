@@ -11,12 +11,24 @@ function passwordHash(passwordClear) {
   return bcrypt.hashSync(passwordClear, salt);
 }
 
-  //logging in
-controller.authenticateAccount = passport.authenticate('local', {
-  successRedirect: '/hello/:logged_in',
-  failureRedirect: '/hello/:not_logged_in'
-})
+// login
+controller.authenticateAccount = (request, response, next) => {
+  passport.authenticate('local', (error, account, info) => {
+    if (error) return next(error)
+    if (!account) return response.status(400).send([account, 'Cannot log in', info])
 
+    request.logIn(account, (error) => {
+      if (error) return next(error)
+
+      response.send({
+        AccountID: account.AccountID,
+        Username: account.Username
+      })
+    })
+  })(request, response, next)
+}
+
+// logout
 controller.deauthenticateAccount = (request, response) => {
   // Invalidate the account cookie if one exists.
   request.logout()

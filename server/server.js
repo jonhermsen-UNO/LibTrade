@@ -1,5 +1,5 @@
 const passport = require('passport')
-const auth = require('./config/passport-setup')
+const passportSetup = require('./config/passport-setup')
 const express = require('express')
 const app = express()
 const session = require('express-session')
@@ -18,9 +18,14 @@ sequelize
   .then(() => console.log('Connection has been established successfully.'))
   .catch(err => console.error('Unable to connect to the database:', err));
 
-auth(passport)
-app.use(session({secret: 'yourmom',resave: true, saveUninitialized:true})); //session secret thats not so secret atm
 // start passport
+app.use(session({
+	secret: require('./config/keys').session,
+	resave: false,
+	saveUninitialized: false,
+  rolling: true
+}))
+passportSetup(passport)
 app.use(passport.initialize())
 app.use(passport.session())
 
