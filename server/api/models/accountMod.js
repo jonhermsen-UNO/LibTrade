@@ -9,9 +9,15 @@ const model = sequelize.define('Account', {
     primaryKey: true
   },
   CollegeID: DataTypes.INTEGER,
-  Username: DataTypes.STRING,
-  Password: DataTypes.STRING,
-  Email: DataTypes.STRING,
+  Email: {
+    type: DataTypes.STRING(254),
+    unique: true
+  },
+  Username: {
+    type: DataTypes.STRING(60),
+    unique: true
+  },
+  Password: DataTypes.STRING(60),
 }, {
   timestamps: false,
   tableName: 'Account'
