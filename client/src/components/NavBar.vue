@@ -14,7 +14,7 @@
                 <b-nav-item id="addListing" href='/listings/add'>Add Listing</b-nav-item>
             </b-navbar-nav>
             <b-navbar-nav class='ml-auto'>
-                <b-button v-if="Username != null" id="logout" v-on:click="logout" style="position:absolute; right:20px; top:20px">Log Out</b-button>
+                <b-button v-if="Username != null" id="logout" v-on:click="logout">Log Out</b-button>
                 <b-button v-else id="login" href='/login'>Log In</b-button>
             </b-navbar-nav>
         </b-collapse>
