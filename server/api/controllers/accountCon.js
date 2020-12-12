@@ -40,7 +40,7 @@ controller.registerAccount = (request, response) => {
     || !request.body.Email
     || !request.body.Username
     || !request.body.Password) {
-    response.status(400).send('Error: invalid input - please fill in all fields')
+    return response.status(400).send('Error: invalid input - please fill in all fields')
   }
 
   accountModel
