@@ -50,7 +50,8 @@ controller.registerAccount = (request, response) => {
       Username: request.body.Username,
       Password: passwordHash(request.body.Password)
     })
-    .then(() => {
+    .then((account) => {
+      console.log(account)
       // TODO: send authenticated cookie
       response.send('Success: account created successfully')
     })
@@ -64,11 +65,19 @@ controller.registerAccount = (request, response) => {
 }
 
 controller.sendAccountDetails = (request, response) => {
-  // TODO: implement with live data
-  response.json({
-    AccountID: 2,
-    Username: "JDoe"
-  })
+  if (!request.session.passport
+      || !request.session.passport.user) return response.json(null)
+
+  accountModel
+    .findOne({ where: { AccountID: request.session.passport.user } })
+    .then((account) => {
+      if (!account) return response.json(null)
+      return response.json({
+        AccountID: account.AccountID,
+        Username: account.Username
+      })
+    })
+    .catch((error) => (console.log(error)))
 }
 
 controller.sendColleges = (request, response) => {
