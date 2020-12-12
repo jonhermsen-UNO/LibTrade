@@ -4,10 +4,10 @@
     <b-form v-on:submit.prevent="login">
       <fieldset class="mx-auto w-100" style="max-width:400px">
       <b-form-group label="Username" label-for="username">
-        <b-form-input id="username" v-model="username" type="text" placeholder="Enter Username"></b-form-input>
+        <b-form-input id="username" v-model="Username" type="text" placeholder="Enter Username"></b-form-input>
       </b-form-group>
       <b-form-group label="Password" label-for="password">
-        <b-form-input id="password" v-model="password" type="password" placeholder="Enter Password"></b-form-input>
+        <b-form-input id="password" v-model="Password" type="password" placeholder="Enter Password"></b-form-input>
       </b-form-group>
       <b-button id="loginButton" block variant="minty" type="submit" class="btn btn-primary is-invalid">Login</b-button><br>
       <div style="text-align:center; font-weight:bold;" class="invalid-feedback">{{errorMessage}}</div>
@@ -31,8 +31,8 @@ export default {
   name: 'Account',
   data: function() {
     return {
-      username: '',
-      password: '',
+      Username: '',
+      Password: '',
       errorMessage: ''
     }
   },
@@ -40,16 +40,22 @@ export default {
     this.errorMessage = '';
   },
   methods: {
-    async login() {
+    login() {
       const data = {
-        username: this.username,
-        password: this.password
+        Username: this.Username,
+        Password: this.Password
       }
-      if (this.username == "" || this.password == "") this.errorMessage = "One or more fields is blank"
-      else { 
-          axios.post("/auth/google/redirect", data)
-          .then(this.$router.go('-1'))
-          .catch(this.errorMessage = "Invalid credentials")
+      if (this.Username == "" || this.Password == "") {
+        this.errorMessage = "One or more fields is blank";
+      } else {
+          axios.post("/api/account/login", data)
+            .then((response) => {
+                console.log(response);
+            })
+            // .then(this.$router.go('-1'))
+            .catch(() => {
+              this.errorMessage = "Invalid credentials"
+            })
       }
     }
   }

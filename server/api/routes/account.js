@@ -23,15 +23,4 @@ router
   .route('/colleges')
   .get(controller.sendColleges)
 
-/*** Unofficial APIs ***/
-
-router
-  .route('/login-google')
-  .post(controller.authenticateGoogle)
-
-router
-  .route('/callback')
-  .get(siteController.sendDefault)
-  .post(siteController.sendDefault)
-
 module.exports = router

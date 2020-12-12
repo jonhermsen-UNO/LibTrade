@@ -59,12 +59,15 @@ export default {
           }
           axios.post("/api/listing/book", data)
           .then((response) => { this.book = response.data })
-          .catch(this.errorMessage = "Could not find book with that ISBN.")
+          .catch(() => {
+              this.errorMessage = "Could not find book with that ISBN.";
+              this.book = {}
+          })
       },
     getUserData() {
       axios.get("/api/account")
       .then((response) => this.username = response.data.Username)
-      .catch(this.$router.push('/login'))
+      .catch(() => { this.$router.push('/login') })
     }
   }
 }

@@ -19,19 +19,3 @@ const model = sequelize.define('BookListing', {
 });
 
 module.exports = model
-
-/*model.updateID = (id) => {
-  model.id = id
-}
-
-model.updateBookID = (id) => {
-    model.bookID = id
-}
-
-model.updatePrice = (price) => {
-    model.price = price
-}
-
-model.updateUserID = (id) => {
-    model.userID = id
-}*/
