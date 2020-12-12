@@ -23,10 +23,6 @@ controller.deauthenticateAccount = (request, response) => {
   return response.send()
 }
 
-controller.authenticateGoogle = passport.authenticate('google', {
-  scope:['profile']
-})
-
 controller.registerAccount = (request, response) => {
   if (!request.body.CollegeID
     || !request.body.Email

@@ -40,13 +40,6 @@ app.use('/api/account', account)
 const listing = require('./api/routes/listing')
 app.use('/api/listing', listing)
 
-//where the user goes after authenticating with google
-app.get('/api/account/callback', 
-  passport.authenticate('google', { failureRedirect: '/api/account' }),
-  function(req, res) {
-    res.redirect('/hello');
-  });
-
 const port = process.env.PORT || '8001'
 app.listen(port, () => {
     console.log("Now listening on port " + port);
