@@ -5,6 +5,7 @@ const sequelize = new Sequelize(db);
 const model = sequelize.define('Account', {
   AccountID: {
     type: DataTypes.INTEGER,
+    autoIncrement: true,
     primaryKey: true
   },
   CollegeID: DataTypes.INTEGER,
