@@ -1,7 +1,6 @@
 const accountModel = require('../models/accountMod')
 const collegeModel = require('../models/collegeMod')
 const listingModel = require('../models/listingMod')
-const passport = require('passport')
 const axios = require('axios').default;
 const keys = require('../../config/keys');
 const controller = {}

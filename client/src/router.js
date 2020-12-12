@@ -6,7 +6,6 @@ import ListingAdd from '@/views/ListingAdd'
 import ListingList from '@/views/ListingList'
 import Home from '@/views/Home'
 import PageNotFound from '@/views/PageNotFound'
-const passport = require('passport')
 
 Vue.use(Router)
 
