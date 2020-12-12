@@ -118,8 +118,6 @@ export default {
         && this.emailsMatch(this.Email, this.verifyEmail)
         && this.passwordsMatch(this.Password, this.verifyPassword)) {
         axios.post("/api/account/register", data)
-          // .then(axios.post("/auth/google/redirect", data))
-          // .then(this.$router.go('-1'))
           .catch(this.errorMessage = "There was a problem creating your account.")
       }
         else {
