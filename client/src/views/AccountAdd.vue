@@ -4,42 +4,42 @@
     <b-form v-on:submit.prevent="register">
     <fieldset class="mx-auto w-100" style="max-width:400px">
       <b-form-group label="Username" label-for="username">
-        <b-form-input v-if="username==''" id="username" v-model="username" type="text" placeholder="Enter username"></b-form-input>
-        <b-form-input v-else-if="uniqueUsername(username)" id="username" class="is-valid" v-model="username" type="text" placeholder="Enter username"></b-form-input>
-        <b-form-input v-else id="username" class="is-invalid" v-model="username" type="text" placeholder="Enter username"></b-form-input>
+        <b-form-input v-if="Username==''" id="username" v-model="Username" type="text" placeholder="Enter username"></b-form-input>
+        <b-form-input v-else-if="uniqueUsername(Username)" id="username" class="is-valid" v-model="Username" type="text" placeholder="Enter username"></b-form-input>
+        <b-form-input v-else id="username" class="is-invalid" v-model="Username" type="text" placeholder="Enter username"></b-form-input>
         <div class="valid-feedback">Username is available</div>
         <div class="invalid-feedback">Username is already in use</div>
       </b-form-group>
       <b-form-group label="Email Address" label-for="email">
-        <b-form-input v-if="email==''" id="email" v-model="email" type="email" placeholder="Enter email"></b-form-input>
-        <b-form-input v-else-if="emailUnique(email) && emailValid(email)" id="email" class="is-valid" v-model="email" type="email" placeholder="Enter email"></b-form-input>
-        <b-form-input v-else id="email" class="is-invalid" v-model="email" type="email" placeholder="Enter email"></b-form-input>
+        <b-form-input v-if="Email==''" id="email" v-model="Email" type="email" placeholder="Enter email"></b-form-input>
+        <b-form-input v-else-if="emailUnique(Email) && emailValid(Email)" id="email" class="is-valid" v-model="Email" type="email" placeholder="Enter email"></b-form-input>
+        <b-form-input v-else id="email" class="is-invalid" v-model="Email" type="email" placeholder="Enter email"></b-form-input>
         <div class="valid-feedback">Email is available</div>
         <div class="invalid-feedback">Email is already in use or is invalid</div>      
       </b-form-group>
       <b-form-group label="Verify Email" label-for="verifyEmail">
         <b-form-input v-if="verifyEmail==''" id="verifyEmail" v-model="verifyEmail" type="email" placeholder="Verify email"></b-form-input>
-        <b-form-input v-else-if="emailsMatch(email, verifyEmail)" id="verifyEmail" class="is-valid" v-model="verifyEmail" type="email" placeholder="Verify email"></b-form-input>
+        <b-form-input v-else-if="emailsMatch(Email, verifyEmail)" id="verifyEmail" class="is-valid" v-model="verifyEmail" type="email" placeholder="Verify email"></b-form-input>
         <b-form-input v-else id="verifyEmail" class="is-invalid" v-model="verifyEmail" type="email" placeholder="Verify email"></b-form-input>      
         <div class="valid-feedback">Emails match</div>
         <div class="invalid-feedback">Emails do not match</div>
       </b-form-group>   
       <b-form-group label="Password" label-for="password">
-        <b-form-input v-if="password != '' && passwordsMatch(password, verifyPassword)" id="password" class="is-valid" v-model="password" type="password" placeholder="Enter password"></b-form-input>
-        <b-form-input v-else id="password" v-model="password" type="password" placeholder="Enter password"></b-form-input>
+        <b-form-input v-if="Password != '' && passwordsMatch(Password, verifyPassword)" id="password" class="is-valid" v-model="Password" type="password" placeholder="Enter password"></b-form-input>
+        <b-form-input v-else id="password" v-model="Password" type="password" placeholder="Enter password"></b-form-input>
         <div class="valid-feedback">Passwords match</div>
       </b-form-group>      
       <b-form-group label="Verify Password" label-for="verifyPassword">
         <b-form-input v-if="verifyPassword==''" id="verifyPassword" v-model="verifyPassword" type="password" placeholder="Verify password"></b-form-input>
-        <b-form-input v-else-if="passwordsMatch(password, verifyPassword)" id="verifyPassword" class="is-valid" v-model="verifyPassword" type="password" placeholder="Verify password"></b-form-input>
+        <b-form-input v-else-if="passwordsMatch(Password, verifyPassword)" id="verifyPassword" class="is-valid" v-model="verifyPassword" type="password" placeholder="Verify password"></b-form-input>
         <b-form-input v-else id="verifyPassword" class="is-invalid" v-model="verifyPassword" type="password" placeholder="Verify password"></b-form-input>
         <div class="valid-feedback">Passwords match</div>
         <div class="invalid-feedback">Passwords do not match</div>      
       </b-form-group>    
       <b-form-group label="Select College" label-for="college">
-        <b-form-select id="college" v-model="college" :options="collegeList" value-field="CollegeID"></b-form-select>  
+        <b-form-select id="college" v-model="CollegeID" :options="collegeList" value-field="CollegeID"></b-form-select>  
       </b-form-group>
-      <b-form-group v-if="college=='Other'" label="Enter College" label-for="enterCollege">
+      <b-form-group v-if="CollegeID == 0" label="Enter College" label-for="enterCollege">
         <b-form-input id="enterCollege" type="text" placeholder="Enter College Name"></b-form-input>
       </b-form-group>
       <b-button block variant="minty" type="submit" class="btn btn-primary is-invalid">Register</b-button>
@@ -75,12 +75,12 @@ export default {
       emailsNotMatchedMessage: 'Emails do not match',
       passwordsNotMatchedMessage: 'Passwords do not match',
       collegeList: [],
-      username: '',
-      email: '',
+      CollegeID: 0,
+      Username: '',
+      Password: '',
+      Email: '',
       verifyEmail: '',
-      password: '',
       verifyPassword: '',
-      college: '',
       errorMessage: '',
     }
   },
@@ -88,36 +88,40 @@ export default {
     this.getColleges();
   },
   methods: {
-    uniqueUsername(username) {
-      return username != '';
+    uniqueUsername(Username) {
+      return Username != '';
     },
-    emailValid(email) {
+    emailValid(Email) {
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
+      return re.test(String(Email).toLowerCase());
     },
-    emailUnique(email) {
-      return email != '';
+    emailUnique(Email) {
+      return Email != '';
     },
-    emailsMatch(email, verifyEmail) {
-     return email.localeCompare(verifyEmail) == 0;
+    emailsMatch(Email, verifyEmail) {
+     return Email.localeCompare(verifyEmail) == 0;
     },
-    passwordsMatch(password, verifyPassword) {
-      return password.localeCompare(verifyPassword) == 0;
+    passwordsMatch(Password, verifyPassword) {
+      return Password.localeCompare(verifyPassword) == 0;
     },
     async register() {
       const data = {
-        username: this.username,
-        email: this.email,
-        password: this.password,
-        college: this.college
+        AccountID: 0, // TODO: auto-assign
+        Username: this.Username,
+        Email: this.Email,
+        Password: this.Password,
+        CollegeID: this.CollegeID
       }
-        if (this.uniqueUsername(this.username) && this.emailValid(this.email) && this.emailUnique(this.email) 
-        && this.emailsMatch(this.email, this.verifyEmail) && this.passwordsMatch(this.password, this.verifyPassword)) {
-          axios.post("/api/account/register", data)
-          .then(axios.post("/auth/google/redirect", data))
-          .then(this.$router.go('-1'))
+      if (this.uniqueUsername(this.Username)
+        && this.emailValid(this.Email)
+        && this.emailUnique(this.Email) 
+        && this.emailsMatch(this.Email, this.verifyEmail)
+        && this.passwordsMatch(this.Password, this.verifyPassword)) {
+        axios.post("/api/account/register", data)
+          // .then(axios.post("/auth/google/redirect", data))
+          // .then(this.$router.go('-1'))
           .catch(this.errorMessage = "There was a problem creating your account.")
-        }
+      }
         else {
           this.errorMessage = "One or more fields is blank or you have an error with your input";
         }
