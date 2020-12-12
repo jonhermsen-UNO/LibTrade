@@ -19,9 +19,31 @@ controller.authenticateGoogle = passport.authenticate('google', {
   scope:['profile']
 })
 
-  //TODO: register
 controller.registerAccount = (request, response) => {
-  response.render('register')
+  if (!request.body.CollegeID
+    || !request.body.Email
+    || !request.body.Username
+    || !request.body.Password) {
+    response.status(400).send('Error: invalid input - please fill in all fields')
+  }
+
+  accountModel
+    .create({
+      CollegeID: request.body.CollegeID,
+      Email: request.body.Email,
+      Username: request.body.Username,
+      Password: request.body.Password
+    })
+    .then(() => {
+      response.send('Success: account created successfully')
+    })
+    .catch((error) => {
+      let message = 'Error: cannot create user account'
+      if (error.original && error.original.code === 'ER_DUP_ENTRY') {
+        message += ' - username or email exists'
+      }
+      response.status(400).send(message)
+    });
 }
 
 controller.sendAccountDetails = (request, response) => {
