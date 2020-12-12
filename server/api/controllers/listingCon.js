@@ -3,6 +3,7 @@ const collegeModel = require('../models/collegeMod')
 const listingModel = require('../models/listingMod')
 const passport = require('passport')
 const axios = require('axios').default;
+const keys = require('../../config/keys');
 const controller = {}
 
 // Transform Google Book data to match the LibTrade schema
@@ -109,7 +110,7 @@ controller.findBookById = (req, res) => {
 //Returns book array where searchquery exists in name anywhere
 controller.findBookByISBN = (req, res) => {
   // TODO: use cache-first approach
-  const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${req.body.ISBN}`;
+  const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${req.body.ISBN}&key=${ keys.google.apiKey }`;
   axios.get(URI, {responseType: "json", method:"get"}).then((data) => {
       if (!data.data.items) {
         res.status(400).send("No book by ISBN")
