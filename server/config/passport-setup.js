@@ -24,7 +24,7 @@ module.exports = (passport) => {
 
   passport.deserializeUser((accountID, callback) => {
     accountModel
-      .findOne({ where: { Account: accountID } })
+      .findOne({ where: { AccountID: accountID } })
       .then((account) => {
         if (!account) return callback(null, false)
         return callback(null, account)
