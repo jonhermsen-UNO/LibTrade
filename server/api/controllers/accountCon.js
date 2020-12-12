@@ -43,6 +43,7 @@ controller.registerAccount = (request, response) => {
       Password: passwordHash(request.body.Password)
     })
     .then(() => {
+      // TODO: send authenticated cookie
       response.send('Success: account created successfully')
     })
     .catch((error) => {
