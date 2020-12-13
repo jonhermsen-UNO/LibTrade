@@ -7,7 +7,10 @@ const model = sequelize.define('College', {
     type: DataTypes.INTEGER,
     primaryKey: true
   },
-  Name: DataTypes.STRING,
+  Name: {
+    type: DataTypes.STRING,
+    
+  },
   Address: DataTypes.STRING,
   City: DataTypes.STRING,
   State: DataTypes.STRING,
