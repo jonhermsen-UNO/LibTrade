@@ -121,7 +121,7 @@ export default {
         axios.post("/api/account/register", data)
           .then(() => {
             axios.post("/api/account/login", data)
-            .then(() => { this.$router.push('/') })
+            .then(() => { this.$router.push('/listings'); })
             .catch((error) => {
               this.errorMessage = error.response.data;
             })

@@ -50,9 +50,11 @@ export default {
       } else {
           axios.post("/api/account/login", data)
             .then((response) => {
-              if (response == 'Invalid credentials')
-              this.errorMessage = response;
-              else this.$router.push('/')
+              if (response == 'Invalid credentials') {
+                this.errorMessage = response;
+              } else {
+                this.$router.push('/listings');
+              }
             })
             .catch((error) => {
               if (error.response.status == 400) this.errorMessage = 'Invalid credentials'
