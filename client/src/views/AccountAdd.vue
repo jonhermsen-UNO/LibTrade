@@ -149,8 +149,10 @@ export default {
     },
     getUserData() {
       axios.get("/api/account")
-      // Redirect to homepage if logged in
-      .then(this.$router.push('/'))
+      // Redirect to listings page if logged in
+      .then((response) => {
+        if (response.data !== null) this.$router.push('/listings');
+      })
       .catch() // Otherwise stay on page
     }
   }
