@@ -49,9 +49,14 @@ export default {
         this.errorMessage = "One or more fields is blank";
       } else {
           axios.post("/api/account/login", data)
-            .then(this.$router.push('/'))
-            .catch(() => {
-              this.errorMessage = "Invalid credentials"
+            .then((response) => {
+              if (response == 'Invalid credentials')
+              this.errorMessage = response;
+              else this.$router.push('/')
+            })
+            .catch((error) => {
+              if (error.response.status == 400) this.errorMessage = 'Invalid credentials'
+              else this.errorMessage = 'Something went wrong, please try again.'
             })
       }
     }

@@ -2,14 +2,14 @@
     <div>
         <b-row>
             <b-col cols="4" class="text-right">
-                <b-img :src=bookData.ThumbnailURL fluid/>
+                <b-img v-if="bookData.ThumbnailURL" :src=bookData.ThumbnailURL fluid/>
             </b-col>
             <b-col cols="8" class="text-left">
-                <h2 class="text-primary">{{bookData.Title}}</h2>
-                <div class="lead">{{bookData.Publisher}}, {{bookData.PublishYear}}</div>
+                <h2 v-if="bookData.Title" class="text-primary">{{bookData.Title}}</h2>
+                <div v-if="bookData.Publisher && bookData.PublishYear" class="lead">{{bookData.Publisher}}, {{bookData.PublishYear}}</div>
                 <div>{{bookData.Author}}<br>
-                ISBN: {{bookData.ISBN10}} / {{bookData.ISBN13}}<br>
-                Retail: ${{bookData.RetailPrice}}</div>
+                <p v-if="bookData.ISBN10 && bookData.ISBN13">ISBN: {{bookData.ISBN10}} / {{bookData.ISBN13}}</p><br>
+                <p v-if="bookData.RetailPrice && bookData.RetailPrice > 0">Retail: ${{bookData.RetailPrice}}</p></div>
             </b-col>
         </b-row>
     </div>
@@ -25,13 +25,6 @@ export default {
   data: function() {
     return {
         bookData: {}
-        // bookData: {
-        //     ISBN10: '061850298X',
-        //     ISBN13: '9780618502981',
-        //     Title: 'Calculus Cengage Learning, 2005',
-        //     Author: 'Ron Larson, Robert P. Hostetler, Bruce Edwards',
-        //     RetailPrice: 12.90
-        // }
     }
   },
   created () {
