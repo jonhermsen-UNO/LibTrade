@@ -41,7 +41,10 @@ export default {
                 Username: this.Username,
             }
             axios.post("/api/account/logout", data)
-            .then(this.Username = null);
+            .then(() => {
+                this.Username = null;
+                this.$router.push('/login');
+            });
         },
         login() {
             this.$router.push('/login');
