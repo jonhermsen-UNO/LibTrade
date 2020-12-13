@@ -42,8 +42,8 @@ function transformBook(obj) {
 controller.viewListing = function(req, res){
   let where = {};
 
-  if (req.body.BookID) where.BookID = req.body.BookID;
-  if (req.body.AskingPrice) where.AskingPrice = req.body.AskingPrice;
+  // if (req.body.BookID) where.BookID = req.body.BookID;
+  // if (req.body.AskingPrice) where.AskingPrice = req.body.AskingPrice;
 
   listingModel.findAll({
     where: where
