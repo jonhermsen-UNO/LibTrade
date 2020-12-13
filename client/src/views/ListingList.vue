@@ -116,7 +116,7 @@ export default {
             AskingPrice: listing.AskingPrice
           }
           axios.post("api/listing/remove", data)
-          .then(this.getListings())
+          .then(() => { this.getListings(); })
           .catch((error) => console.log(error.response));
       },
     purchase(listing) {
@@ -127,7 +127,7 @@ export default {
     },
     getListings() {
         axios.post("api/listing")
-        .then((response) => this.listings = response.data)
+        .then((response) => { this.listings = response.data; })
       },
     getUserData() {
      axios.get("/api/account")
