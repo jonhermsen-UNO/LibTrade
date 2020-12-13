@@ -43,7 +43,8 @@ export default {
             axios.post("/api/account/logout", data)
             .then(() => {
                 this.Username = null;
-                this.$router.push('/login');
+                // use go() to force the page to reload auth state
+                this.$router.go(this.$router.push('/login'));
             });
         },
         login() {

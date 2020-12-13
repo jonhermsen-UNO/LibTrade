@@ -53,7 +53,8 @@ export default {
               if (response == 'Invalid credentials') {
                 this.errorMessage = response;
               } else {
-                this.$router.push('/listings');
+                // use go() to force the page to reload auth state
+                this.$router.go(this.$router.push('/listings'));
               }
             })
             .catch((error) => {
