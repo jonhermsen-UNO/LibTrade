@@ -105,7 +105,8 @@ export default {
               ISBN: this.isbn,
               Title: this.title
           }
-          this.listings = axios.post("api/listing/book", data)
+          axios.post("api/listing", data)
+          .then((response) => { this.listings = response.data; })
           .catch(this.errorMessage = "There was a problem performing your search.")
       },
       remove(listing) {
