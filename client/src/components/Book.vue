@@ -7,7 +7,7 @@
             <b-col cols="8" class="text-left">
                 <h2 v-if="bookData.Title" class="text-primary">{{bookData.Title}}</h2>
                 <div v-if="bookData.Publisher && bookData.PublishYear" class="lead">{{bookData.Publisher}}, {{bookData.PublishYear}}</div>
-                <div>{{bookData.Author}}<br>
+                <div>{{bookData.Authors}}<br>
                 <p v-if="bookData.ISBN10 && bookData.ISBN13">ISBN: {{bookData.ISBN10}} / {{bookData.ISBN13}}</p><br>
                 <p v-if="bookData.RetailPrice && bookData.RetailPrice > 0">Retail: ${{bookData.RetailPrice}}</p></div>
             </b-col>

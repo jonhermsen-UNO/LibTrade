@@ -14,7 +14,7 @@ function transformBook(obj) {
     Book.Publisher = obj.volumeInfo.publisher
     Book.Title = obj.volumeInfo.title
     if (obj.volumeInfo.subtitle) Book.Title += ": " + obj.volumeInfo.subtitle
-    Book.Author = obj.volumeInfo.authors.join(", ")
+    Book.Authors = obj.volumeInfo.authors.join(", ")
     if (obj.volumeInfo.industryIdentifiers) {
       obj.volumeInfo.industryIdentifiers.forEach(objID => {
         if (objID.type === "ISBN_10") Book.ISBN10 = objID.identifier

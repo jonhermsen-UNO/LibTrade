@@ -42,7 +42,7 @@ describe("NavBar.vue", () => {
                 ISBN10: '1853260002',
                 ISBN13: '9781853260001',
                 Title: 'Pride and Prejudice',
-                Author: 'Jane Austen',
+                Authors: 'Jane Austen',
                 RetailPrice: 0
             }
             const wrapper = mount(Book, {localVue, router, data: function() {return {bookData: bookData}}});
@@ -59,7 +59,7 @@ describe("NavBar.vue", () => {
                 ISBN10: '1853260002',
                 ISBN13: '9781853260001',
                 Title: 'Pride and Prejudice',
-                Author: 'Jane Austen',
+                Authors: 'Jane Austen',
                 RetailPrice: 2.00
             }
             const wrapper = mount(Book, {localVue, router, data: function() {return {bookData: bookData}}});
