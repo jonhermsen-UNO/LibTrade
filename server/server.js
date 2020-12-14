@@ -48,7 +48,7 @@ const sequelize = new Sequelize(db)
 sequelize
   .authenticate()
   .then(() => console.log('Connection has been established successfully.'))
-  .catch(err => console.error('Unable to connect to the database:', err))
+  .catch((error) => console.error('Unable to connect to the database:', error))
 // create any tables that do not already exist
 const accountTable = require('./api/models/accountMod')
 const collegeTable = require('./api/models/collegeMod')
