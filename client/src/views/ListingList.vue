@@ -19,7 +19,7 @@
                 </b-card>
             </b-col>
             <b-col cols="12" lg="8">
-                <b-alert v-if="listings.length==0" variant="danger" show>No Results Found.</b-alert>
+                <b-alert v-if="listings.length==0" variant="info" show>No Results Found.</b-alert>
                 <b-list-group>
                     <b-list-group-item v-for="listing in listings" :key="listing.BookListingID">
                         <Listing :listingData="listing"></Listing>
