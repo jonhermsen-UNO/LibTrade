@@ -11,7 +11,6 @@ function passwordHash(passwordClear) {
   return bcrypt.hashSync(passwordClear, salt);
 }
 
-// login
 controller.authenticateAccount = (request, response, next) => {
   passport.authenticate('local', (error, account, info) => {
     if (error) return next(error)
@@ -28,9 +27,7 @@ controller.authenticateAccount = (request, response, next) => {
   })(request, response, next)
 }
 
-// logout
 controller.deauthenticateAccount = (request, response) => {
-  // Invalidate the account cookie if one exists.
   request.logout()
   return response.send()
 }
@@ -52,7 +49,6 @@ controller.registerAccount = (request, response) => {
     })
     .then((account) => {
       console.log(account)
-      // TODO: send authenticated cookie
       response.send('Success: account created successfully')
     })
     .catch((error) => {
