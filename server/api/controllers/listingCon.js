@@ -6,27 +6,27 @@ const axios = require('axios').default;
 const controller = {}
 
 // Transform Google Book data to match the LibTrade schema
-function transformBook(obj) {
+function transformBook(googleBook) {
   const Book = {}
-  Book.BookID = obj.id
-  if (obj.volumeInfo) {
-    Book.PublishYear = parseInt(obj.volumeInfo.publishedDate.substring(0, 4) , 10)
-    Book.Publisher = obj.volumeInfo.publisher
-    Book.Title = obj.volumeInfo.title
-    if (obj.volumeInfo.subtitle) Book.Title += ": " + obj.volumeInfo.subtitle
-    Book.Authors = obj.volumeInfo.authors.join(", ")
-    if (obj.volumeInfo.industryIdentifiers) {
-      obj.volumeInfo.industryIdentifiers.forEach(objID => {
+  Book.BookID = googleBook.id
+  if (googleBook.volumeInfo) {
+    Book.PublishYear = parseInt(googleBook.volumeInfo.publishedDate.substring(0, 4) , 10)
+    Book.Publisher = googleBook.volumeInfo.publisher
+    Book.Title = googleBook.volumeInfo.title
+    if (googleBook.volumeInfo.subtitle) Book.Title += ": " + googleBook.volumeInfo.subtitle
+    Book.Authors = googleBook.volumeInfo.authors.join(", ")
+    if (googleBook.volumeInfo.industryIdentifiers) {
+      googleBook.volumeInfo.industryIdentifiers.forEach(objID => {
         if (objID.type === "ISBN_10") Book.ISBN10 = objID.identifier
         if (objID.type === "ISBN_13") Book.ISBN13 = objID.identifier
       })
     }
-    if (obj.volumeInfo.imageLinks) Book.ThumbnailURL = obj.volumeInfo.imageLinks.thumbnail
+    if (googleBook.volumeInfo.imageLinks) Book.ThumbnailURL = googleBook.volumeInfo.imageLinks.thumbnail
   }
-  if (obj.saleInfo
-      && obj.saleInfo.retailPrice
-      && obj.saleInfo.retailPrice.currencyCode === "USD") {
-    Book.RetailPrice = obj.saleInfo.retailPrice.amount
+  if (googleBook.saleInfo
+      && googleBook.saleInfo.retailPrice
+      && googleBook.saleInfo.retailPrice.currencyCode === "USD") {
+    Book.RetailPrice = googleBook.saleInfo.retailPrice.amount
   } else {
     Book.RetailPrice = 0
   }
