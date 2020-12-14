@@ -1,8 +1,8 @@
-const accountModel = require('../models/accountMod')
-const collegeModel = require('../models/collegeMod')
+const { Op } = require('sequelize')
 const listingModel = require('../models/listingMod')
-const axios = require('axios').default;
+const bookModel = require('../models/bookMod')
 const keys = require('../../config/keys');
+const axios = require('axios').default;
 const controller = {}
 
 // Transform Google Book data to match the LibTrade schema
@@ -31,6 +31,21 @@ function transformBook(obj) {
     Book.RetailPrice = 0
   }
   return Book
+}
+
+async function cacheBook(book) {
+  bookModel.create({
+    BookID: book.BookID,
+    CacheDate: Date.now(),
+    PublishYear: book.PublishYear,
+    Publisher: book.Publisher,
+    Title: book.Title,
+    Authors: book.Authors,
+    ISBN10: book.ISBN10,
+    ISBN13: book.ISBN13,
+    RetailPrice: book.RetailPrice,
+    ThumbnailURL: book.ThumbnailURL
+  })
 }
 
 //gets listing form to create listing
@@ -109,23 +124,36 @@ controller.findBookById = (req, res) => {
 //Searchs for book with name matching search query.
 //Returns book array where searchquery exists in name anywhere
 controller.findBookByISBN = (req, res) => {
-  // TODO: use cache-first approach
-  const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${req.body.ISBN}&key=${ keys.google.apiKey }`;
-  axios.get(URI, {responseType: "json", method:"get"}).then((data) => {
-      if (!data.data.items) {
-        res.status(400).send("No book by ISBN")
-      } else {
-        res.send(transformBook(data.data.items[0]))
+  bookModel.findOne({
+    where: {
+      [Op.or]: {
+        ISBN10: req.body.ISBN,
+        ISBN13: req.body.ISBN
       }
-  }).catch((err) => {
-      res.send(`Error: ${err}`)
-  });
+    }
+  })
+  .then((book) => {
+    if (!book) {
+      // fetch and cache a new book from the Google Books API
+      const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${ req.body.ISBN }&key=${ keys.google.apiKey }`;
+      axios.get(URI, { responseType: "json", method:"get" }).then((data) => {
+          if (!data && !data.data.items) {
+            res.status(400).send("No book by ISBN")
+          } else {
+            book = transformBook(data.data.items[0])
+            cacheBook(book)
+            res.send(book)
+          }
+      }).catch((err) => {
+          res.send(`Error: ${err}`)
+      });
+    } else {
+      res.send(book)
+    }
+  })
+  .catch((error) => {
+    console.log(error)
+  })
 }
-
-
-
-
-
-
 
 module.exports = controller
