@@ -17,6 +17,9 @@ app.use(session({
 	resave: false,
   rolling: true
 }))
+// add basic header protections
+const helmet = require('helmet')
+app.use(helmet())
 // enable CORS with the client
 app.use((request, response, next) => {
   response.header('Access-Control-Allow-Origin', '*')
