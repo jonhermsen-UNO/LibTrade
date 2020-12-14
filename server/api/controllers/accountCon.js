@@ -67,6 +67,7 @@ controller.getAccountDetails = (request, response) => {
   accountModel
     .findByPk(request.session.passport.user)
     .then((account) => {
+      // early return if no account is found
       if (!account) return response.status(403).json(null)
 
       return response.json({
@@ -86,6 +87,7 @@ controller.getColleges = (request, response) => {
       ]
     })
     .then((colleges) => {
+      // early return if no colleges are found
       if (!colleges) return response.status(500).send('Sorry, something went wrong')
 
       response.json(colleges)
