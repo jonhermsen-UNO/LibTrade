@@ -107,7 +107,7 @@ export default {
           }
           axios.post("api/listing", data)
           .then((response) => { this.listings = response.data; })
-          .catch(this.errorMessage = "There was a problem performing your search.")
+          .catch(() => { this.errorMessage = "There was a problem performing your search." })
       },
       remove(listing) {
           const data = {
