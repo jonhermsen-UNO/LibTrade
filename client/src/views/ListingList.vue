@@ -21,7 +21,6 @@
                 <b-list-group>
                     <b-list-group-item v-for="listing in listings" :key="listing.BookListingID">
                         <Listing :listingData="listing"></Listing>
-                        {{listing}}
                         <b-modal :id="'modal' + listing.BookListingID" title="Buy Book" ok-title="Purchase" @ok.prevent="purchase(listing)" @hidden="clearData">
                             <b-form-group label="Card Number" label-for="cardnumber">
                             <b-form-input id="cardnumber" v-model="creditCardData.number" type="number"></b-form-input>
