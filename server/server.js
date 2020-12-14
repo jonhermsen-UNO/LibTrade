@@ -2,16 +2,6 @@ const express = require('express')
 const app = express()
 
 
-// ==== routes ====
-
-
-const account = require('./api/routes/account')
-app.use('/api/account', account)
-
-const listing = require('./api/routes/listing')
-app.use('/api/listing', listing)
-
-
 // ==== headers ====
 
 
@@ -67,6 +57,16 @@ accountTable.sync({ force: false })
 collegeTable.sync({ force: false })
 listingTable.sync({ force: false })
 bookTable.sync({ force: false })
+
+
+// ==== routes ====
+
+
+const account = require('./api/routes/account')
+app.use('/api/account', account)
+
+const listing = require('./api/routes/listing')
+app.use('/api/listing', listing)
 
 
 // ==== server ====
