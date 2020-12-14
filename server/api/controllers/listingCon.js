@@ -64,12 +64,6 @@ controller.getListings = (request, response) => {
 }
 
 controller.doListingCreate = (request, response) => {
-  if (!request.session
-    || !request.session.passport
-    || !request.session.passport.user) {
-    return response.status(403).send('The user is not authenticated')
-  }
-
   listingModel
     .create({
       AccountID: request.session.passport.user,
