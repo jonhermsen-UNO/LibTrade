@@ -4,20 +4,21 @@ const sequelize = new Sequelize(db)
 
 const model = sequelize.define('Book', {
   BookID: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING(20),
     primaryKey: true
   },
-  CacheDate: DataTypes.DATE,
+  CacheDate: DataTypes.DATEONLY,
   PublishYear: DataTypes.SMALLINT,
-  Publisher: DataTypes.STRING,
-  Title: DataTypes.STRING,
-  Authors: DataTypes.STRING,
-  ISBN10: DataTypes.STRING,
-  ISBN13: DataTypes.STRING,
-  RetailPrice: DataTypes.DECIMAL,
-  ThumbnailURL: DataTypes.STRING
+  Publisher: DataTypes.STRING(200),
+  Title: DataTypes.STRING(200),
+  Authors: DataTypes.STRING(200),
+  ISBN10: DataTypes.STRING(10),
+  ISBN13: DataTypes.STRING(13),
+  RetailPrice: DataTypes.DECIMAL(6,2),
+  ThumbnailURL: DataTypes.STRING(300)
 }, {
-  tableName: 'BookCache'
+  timestamps: false,
+  tableName: 'Book'
 });
 
 module.exports = model

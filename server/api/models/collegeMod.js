@@ -7,14 +7,11 @@ const model = sequelize.define('College', {
     type: DataTypes.INTEGER,
     primaryKey: true
   },
-  Name: {
-    type: DataTypes.STRING,
-    
-  },
-  Address: DataTypes.STRING,
-  City: DataTypes.STRING,
-  State: DataTypes.STRING,
-  Zip: DataTypes.STRING
+  Name: DataTypes.STRING(200),
+  Address: DataTypes.STRING(150),
+  City: DataTypes.STRING(50),
+  State: DataTypes.STRING(2),
+  ZIP: DataTypes.STRING(5)
 }, {
   timestamps: false,
   tableName: 'College'
