@@ -23,9 +23,9 @@ function transformBook(obj) {
     }
     if (obj.volumeInfo.imageLinks) Book.ThumbnailURL = obj.volumeInfo.imageLinks.thumbnail
   }
-  if (obj.saleInfo &&
-      obj.saleInfo.retailPrice &&
-      obj.saleInfo.retailPrice.currencyCode === "USD") {
+  if (obj.saleInfo
+      || obj.saleInfo.retailPrice
+      || obj.saleInfo.retailPrice.currencyCode === "USD") {
     Book.RetailPrice = obj.saleInfo.retailPrice.amount
   } else {
     Book.RetailPrice = 0
@@ -132,7 +132,7 @@ controller.findBookByISBN = (req, res) => {
       // fetch and cache a new book from the Google Books API
       const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${ req.body.ISBN }&key=${ keys.google.apiKey }`;
       axios.get(URI, { responseType: "json", method:"get" }).then((data) => {
-          if (!data && !data.data.items) {
+          if (!data || !data.data.items) {
             res.status(400).send("No book by ISBN")
           } else {
             book = transformBook(data.data.items[0])
