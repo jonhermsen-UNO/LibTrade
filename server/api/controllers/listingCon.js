@@ -63,20 +63,26 @@ controller.viewListing = (req, res) => {
 }
 
 controller.postListing = (req, res) => {
-  listingModel.create({
-    AccountID: req.body.AccountID,
-    BookID: req.body.BookID,
-    AskingPrice: req.body.AskingPrice
-  }).then((posted) => {
-      if(posted){
-        return res.send(posted);
+  if (!req.session
+    || !req.session.passport
+    || !req.session.passport.user) {
+    return res.status(401).send('The user is not authenticated')
+  }
+
+  listingModel
+    .create({
+      AccountID: req.session.passport.user,
+      BookID: req.body.BookID,
+      AskingPrice: req.body.AskingPrice
+    }).then((posted) => {
+        if (posted) {
+          return res.send(posted);
+        } else {
+          return res.status(400).send('unable to create listing');
+        }
       }
-      else{
-        return res.status(401).send('unable to create listing');
-      }
-    }
-  )
-};
+    )
+}
 
 controller.removeListing = (req, res) => {
   listingModel.destroy({
