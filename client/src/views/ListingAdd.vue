@@ -43,7 +43,7 @@ export default {
   },
   methods: {
       onSubmit() {
-        if (!this.book.BookID || this.askingprice <= 0 || this.errorMessage != '') this.errorMessage = "There is an issue with your input."
+        if (!this.book.BookID || this.askingprice <= 0) this.errorMessage = "There is an issue with your input."
         else {
             let data = {
                 BookID: this.book.BookID,
@@ -60,7 +60,7 @@ export default {
               ISBN: this.isbn
           }
           axios.post("/api/listing/book", data)
-          .then((response) => { this.book = response.data })
+          .then((response) => { this.book = response.data; this.errorMessage = '' })
           .catch(() => {
               this.errorMessage = "Could not find book with that ISBN.";
               this.book = {}
