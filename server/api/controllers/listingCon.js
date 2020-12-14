@@ -48,11 +48,11 @@ async function cacheBook(book) {
   })
 }
 
-controller.viewListing = (req, response) => {
+controller.viewListing = (request, response) => {
   let where = {};
-  if(req.body.ISBN10 ||  req.body.ISBN13) where.BookID = this.findBookByISBN(req.body.ISBN, response).BookID;
-  else if (req.body.BookID) where.BookID = req.body.BookID;
-  if (req.body.AskingPrice) where.AskingPrice = req.body.AskingPrice;
+  if(request.body.ISBN10 ||  request.body.ISBN13) where.BookID = this.findBookByISBN(request.body.ISBN, response).BookID;
+  else if (request.body.BookID) where.BookID = request.body.BookID;
+  if (request.body.AskingPrice) where.AskingPrice = request.body.AskingPrice;
 
   listingModel.findAll({
     where: where
@@ -62,18 +62,18 @@ controller.viewListing = (req, response) => {
   })
 }
 
-controller.postListing = (req, response) => {
-  if (!req.session
-    || !req.session.passport
-    || !req.session.passport.user) {
+controller.postListing = (request, response) => {
+  if (!request.session
+    || !request.session.passport
+    || !request.session.passport.user) {
     return response.status(403).send('The user is not authenticated')
   }
 
   listingModel
     .create({
-      AccountID: req.session.passport.user,
-      BookID: req.body.BookID,
-      AskingPrice: req.body.AskingPrice
+      AccountID: request.session.passport.user,
+      BookID: request.body.BookID,
+      AskingPrice: request.body.AskingPrice
     }).then((posted) => {
         if (posted) {
           return response.send(posted);
@@ -84,12 +84,12 @@ controller.postListing = (req, response) => {
     )
 }
 
-controller.removeListing = (req, response) => {
+controller.removeListing = (request, response) => {
   listingModel.destroy({
     where:{
-      AccountID: req.body.AccountID,
-      BookID: req.body.BookID,
-      AskingPrice: req.body.AskingPrice
+      AccountID: request.body.AccountID,
+      BookID: request.body.BookID,
+      AskingPrice: request.body.AskingPrice
     }}).then(
       function(destroyed){
         if(destroyed){
@@ -105,9 +105,9 @@ controller.removeListing = (req, response) => {
 
 //=========BOOKS=========
 
-controller.findBookById = (req, response) => {
+controller.findBookById = (request, response) => {
   bookModel.findOne({
-    where: { BookID: req.params.BookID }
+    where: { BookID: request.params.BookID }
   })
   .then((book) => {
     if (!book) {
@@ -118,19 +118,19 @@ controller.findBookById = (req, response) => {
   })
 }
 
-controller.findBookByISBN = (req, response) => {
+controller.findBookByISBN = (request, response) => {
   bookModel.findOne({
     where: {
       [Op.or]: {
-        ISBN10: req.body.ISBN,
-        ISBN13: req.body.ISBN
+        ISBN10: request.body.ISBN,
+        ISBN13: request.body.ISBN
       }
     }
   })
   .then((book) => {
     if (!book) {
       // fetch and cache a new book from the Google Books API
-      const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${ req.body.ISBN }&key=${ keys.google.apiKey }`;
+      const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${ request.body.ISBN }&key=${ keys.google.apiKey }`;
       axios.get(URI, { responseType: "json", method:"get" }).then((data) => {
           if (!data || !data.data.items) {
             response.status(400).send("No book by ISBN")
