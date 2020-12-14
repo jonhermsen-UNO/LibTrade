@@ -14,12 +14,12 @@ function passwordHash(passwordClear) {
 controller.doAccountLogin = (request, response, next) => {
   passport.authenticate('local', (error, account, info) => {
     if (error) return next(error)
-    if (!account) return response.status(400).send([account, 'Cannot log in', info])
+    if (!account) return response.status(400).send('Error: invalid username or password')
 
     request.logIn(account, (error) => {
       if (error) return next(error)
 
-      response.send({
+      response.json({
         AccountID: account.AccountID,
         Username: account.Username
       })
@@ -29,7 +29,7 @@ controller.doAccountLogin = (request, response, next) => {
 
 controller.doAccountLogout = (request, response) => {
   request.logout()
-  return response.send()
+  return response.json(null)
 }
 
 controller.doAccountRegister = (request, response) => {
@@ -62,10 +62,10 @@ controller.doAccountRegister = (request, response) => {
 
 controller.getAccountDetails = (request, response) => {
   if (!request.session.passport
-      || !request.session.passport.user) return response.json(null)
+      || !request.session.passport.user) return response.status(403).json(null)
 
   accountModel
-    .findOne({ where: { AccountID: request.session.passport.user } })
+    .findByPk(request.session.passport.user)
     .then((account) => {
       if (!account) return response.json(null)
       return response.json({
@@ -73,7 +73,7 @@ controller.getAccountDetails = (request, response) => {
         Username: account.Username
       })
     })
-    .catch((error) => (console.log(error)))
+    .catch((error) => (response.status(500).send('Sorry, something went wrong')))
 }
 
 controller.getColleges = (request, response) => {
@@ -85,9 +85,10 @@ controller.getColleges = (request, response) => {
       ]
     })
     .then((colleges) => {
-      if (!colleges) response.status(400).send('No colleges available')
+      if (!colleges) response.status(500).send('Sorry, something went wrong')
       response.json(colleges)
     })
+    .catch((error) => (response.status(500).send('Sorry, something went wrong')))
 }
 
 module.exports = controller
