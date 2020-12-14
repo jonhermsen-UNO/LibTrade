@@ -8,28 +8,30 @@ const controller = {}
 // Transform Google Book data to match the LibTrade schema
 function transformBook(googleBook) {
   const Book = {}
+
   Book.BookID = googleBook.id
   if (googleBook.volumeInfo) {
     Book.PublishYear = parseInt(googleBook.volumeInfo.publishedDate.substring(0, 4) , 10)
     Book.Publisher = googleBook.volumeInfo.publisher
     Book.Title = googleBook.volumeInfo.title
-    if (googleBook.volumeInfo.subtitle) Book.Title += ": " + googleBook.volumeInfo.subtitle
-    Book.Authors = googleBook.volumeInfo.authors.join(", ")
+    if (googleBook.volumeInfo.subtitle) Book.Title += ': ' + googleBook.volumeInfo.subtitle
+    Book.Authors = googleBook.volumeInfo.authors.join(', ')
     if (googleBook.volumeInfo.industryIdentifiers) {
       googleBook.volumeInfo.industryIdentifiers.forEach(objID => {
-        if (objID.type === "ISBN_10") Book.ISBN10 = objID.identifier
-        if (objID.type === "ISBN_13") Book.ISBN13 = objID.identifier
+        if (objID.type === 'ISBN_10') Book.ISBN10 = objID.identifier
+        if (objID.type === 'ISBN_13') Book.ISBN13 = objID.identifier
       })
     }
     if (googleBook.volumeInfo.imageLinks) Book.ThumbnailURL = googleBook.volumeInfo.imageLinks.thumbnail
   }
   if (googleBook.saleInfo
-      && googleBook.saleInfo.retailPrice
-      && googleBook.saleInfo.retailPrice.currencyCode === "USD") {
+    && googleBook.saleInfo.retailPrice
+    && googleBook.saleInfo.retailPrice.currencyCode === 'USD') {
     Book.RetailPrice = googleBook.saleInfo.retailPrice.amount
   } else {
     Book.RetailPrice = 0
   }
+
   return Book
 }
 
@@ -55,91 +57,93 @@ controller.getListings = (request, response) => {
   else if (request.body.BookID) where.BookID = request.body.BookID
   if (request.body.AskingPrice) where.AskingPrice = request.body.AskingPrice
 
-  listingModel.findAll({
-    where: where
-  }).then((listings) => {
-    if (!listings) return response.status(400).send('no listing available')
-    return response.json(listings)
+  listingModel
+    .findAll({ where: where })
+    .then((listings) => {
+      // early return if no listings are present
+      if (!listings) return response.status(400).send('no listing available')
+
+      response.json(listings)
   })
 }
 
 controller.doListingCreate = (request, response) => {
+  if (!request.body.BookID
+    || !request.body.AskingPrice) {
+    return response.status(400).send('Error: invalid input - please fill in all fields')
+  }
+
   listingModel
     .create({
       AccountID: request.session.passport.user,
       BookID: request.body.BookID,
       AskingPrice: request.body.AskingPrice
-    }).then((posted) => {
-        if (posted) {
-          return response.send(posted)
-        } else {
-          return response.status(400).send('unable to create listing')
-        }
-      }
-    )
+    })
+    .then(() => (response.send('Success: listing created successfully')))
+    .catch(() => (response.status(400).send('Error: cannot create listing')))
 }
 
 controller.doListingRemove = (request, response) => {
-  listingModel.destroy({
-    where:{
-      AccountID: request.body.AccountID,
-      BookID: request.body.BookID,
-      AskingPrice: request.body.AskingPrice
-    }}).then(
-      function(destroyed){
-        if(destroyed){
-          return response.send('Listing removed successfully!')
-        }
-        else{
-          return response.status(400).send("unable to remove listing")
-        }
-
+  listingModel
+    .destroy({
+      where: {
+        AccountID: request.session.passport.user,
+        BookID: request.body.BookID,
+        AskingPrice: request.body.AskingPrice
       }
-    )
+    })
+    .then((destroyCount) => {
+      // early return if nothing was removed
+      if (!destroyCount) return response.status(400).send('Error: cannot remove listing')
+
+      response.send('Success: listing created successfully')
+    })
+    .catch(() => (response.status(500).send('Sorry, something went wrong')))
 }
 
 controller.getBookByID = (request, response) => {
-  bookModel.findByPk(request.params.BookID)
-  .then((book) => {
-    if (!book) {
-      response.status(400).send('No book by ID')
-    } else {
+  bookModel
+    .findByPk(request.params.BookID)
+    .then((book) => {
+      // early return if no book is found
+      if (!book) return response.status(400).send('Error: no book by ID')
+
       response.json(book)
-    }
-  })
+    })
+    .catch(() => (response.status(500).send('Sorry, something went wrong')))
 }
 
 controller.getBookByISBN = (request, response) => {
-  bookModel.findOne({
-    where: {
-      [Op.or]: {
-        ISBN10: request.body.ISBN,
-        ISBN13: request.body.ISBN
+  bookModel
+    .findOne({
+      where: {
+        [Op.or]: {
+          ISBN10: request.body.ISBN,
+          ISBN13: request.body.ISBN
+        }
       }
-    }
-  })
-  .then((book) => {
-    if (!book) {
-      // fetch and cache a new book from the Google Books API
+    })
+    .then((book) => {
+      // early return if a book is found
+      if (book) return response.json(book)
+
       const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${ request.body.ISBN }&key=${ keys.google.apiKey }`
-      axios.get(URI, { responseType: "json", method:"get" }).then((data) => {
-          if (!data || !data.data.items) {
-            response.status(400).send("No book by ISBN")
-          } else {
-            book = transformBook(data.data.items[0])
-            cacheBook(book)
-            response.send(book)
-          }
-      }).catch((err) => {
-          response.send(`Error: ${err}`)
-      })
-    } else {
-      response.send(book)
-    }
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+      // otherwise fetch and cache a new book from the Google Books API
+      axios
+        .get(URI, { responseType: 'json' })
+        .then((data) => {
+            if (data && data.data.items) {
+              let book = transformBook(data.data.items[0])
+
+              cacheBook(book)
+              response.json(book)
+            } else {
+              response.status(400).send('Error: no book by ISBN')
+            }
+        })
+        .catch(() => (response.status(500).send('Sorry, something went wrong')))
+    })
+    .catch(() => (response.status(500).send('Sorry, something went wrong')))
 }
 
 module.exports = controller
