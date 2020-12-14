@@ -52,19 +52,33 @@ async function cacheBook(book) {
 }
 
 controller.getListings = (request, response) => {
-  let where = {}
-  if(request.body.ISBN10 ||  request.body.ISBN13) where.BookID = this.getBookByISBN(request.body.ISBN, response).BookID
-  else if (request.body.BookID) where.BookID = request.body.BookID
-  if (request.body.AskingPrice) where.AskingPrice = request.body.AskingPrice
+  let where = {},
+    hasFilter = false,
+    include = []
+
+  if (request.body.Title !== '') {
+    hasFilter = true
+    where.Title = { [Op.like]: '%' + request.body.Title + '%' }
+  }
+  if (request.body.ISBN !== '') {
+    hasFilter = true
+    where[[Op.or]] = {
+      ISBN10: { [Op.like]: '%' + request.body.ISBN + '%' },
+      ISBN13: { [Op.like]: '%' + request.body.ISBN + '%' }
+    }
+  }
+
+  if (hasFilter) {
+    include.push({
+      model: bookModel,
+      where: where
+    })
+  }
 
   listingModel
-    .findAll({ where: where })
-    .then((listings) => {
-      // early return if no listings are present
-      if (!listings) return response.status(400).send('no listing available')
-
-      response.json(listings)
-  })
+    .findAll({ include: include })
+    .then((listings) => (response.json(listings)))
+    .catch(() => (response.status(500).send('Sorry, something went wrong')))
 }
 
 controller.doListingCreate = (request, response) => {

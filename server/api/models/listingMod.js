@@ -1,3 +1,4 @@
+const bookModel = require('./bookMod')
 const { Sequelize, DataTypes } = require('sequelize')
 const db = require('../../config/database')
 const sequelize = new Sequelize(db)
@@ -14,6 +15,14 @@ const model = sequelize.define('BookListing', {
 },{
   timestamps: false,
   tableName: 'BookListing'
+})
+
+model.belongsTo(bookModel, {
+  through: model,
+  foreignKey: 'BookID',
+  // expose the relationship to Sequelize, but do
+  // not create the relationship in the database
+  constraints: false
 })
 
 module.exports = model
