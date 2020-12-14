@@ -25,7 +25,7 @@
                         <Listing :listingData="listing"></Listing>
                         <b-modal :id="'modal' + listing.BookListingID" title="Buy Book" ok-title="Purchase" @ok.prevent="purchase(listing)" @hidden="clearData">
                             <b-form-group label="Card Number" label-for="cardnumber">
-                            <b-form-input id="cardnumber" v-model="creditCardData.number" type="number"></b-form-input>
+                            <b-form-input id="cardnumber" v-model="creditCardData.number" type="password"></b-form-input>
                             </b-form-group>
                             <b-form-group label="Name on Card" label-for="cardname">
                             <b-form-input id="cardname" v-model="creditCardData.name" type="text"></b-form-input>
@@ -37,7 +37,7 @@
                             <b-form-select id="cardexpYear" v-model="creditCardData.expYear" :options="yearList"></b-form-select>  
                             </b-form-group>
                             <b-form-group label="Security Code" label-for="cardcvv">
-                            <b-form-input id="cardcvv" v-model="creditCardData.cvv" type="number"></b-form-input>
+                            <b-form-input id="cardcvv" v-model="creditCardData.cvv" type="password"></b-form-input>
                             </b-form-group>
                             <p class="text-danger">{{popupErrorMessage}}</p>
                         </b-modal>
