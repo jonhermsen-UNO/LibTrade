@@ -52,7 +52,7 @@ export default {
             }
             axios.post("/api/listing/create", data)
             .then(() => { this.$router.push('/listings'); })
-            .catch(this.errorMessage = "There was a problem adding your listing.")
+            .catch(() => { this.errorMessage = "There was a problem adding your listing." })
         }
       },
     searchBook() {
