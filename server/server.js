@@ -48,9 +48,6 @@ app.use((request, response, next) => {
   next()
 })
 
-const hello = require('./api/routes/hello')
-app.use('/hello', hello)
-
 const account = require('./api/routes/account')
 app.use('/api/account', account)
 
