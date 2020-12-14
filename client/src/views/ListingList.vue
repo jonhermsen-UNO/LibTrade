@@ -3,17 +3,19 @@
     <b-container fluid="lg">
         <b-row>
             <b-col cols="12" lg="4">
-                <b-alert v-if="!hasSearched" variant="secondary" show>Please search for a book</b-alert>
-                <b-card class="w-100 mb-2">
-                    <b-form v-on:submit.prevent="search">
-                        <fieldset class="mx-auto w-100" style="max-width:400px">
-                            <b-form-input v-model="isbn" type="text" placeholder="ISBN"></b-form-input>
-                            <br><b-form-input v-model="title" type="text" placeholder="Title"></b-form-input>
-                            <br>
-                            <b-button id="search" style="float:right;" type="submit" class="btn btn-primary">Search</b-button>
-                            <p style="color:red; font-weight:bold;">{{errorMessage}}</p>
-                        </fieldset>
-                    </b-form>
+                <b-card no-body>
+                    <b-card-header class="text-center">Search Book Listings</b-card-header>
+                    <b-card-body>
+                        <b-form v-on:submit.prevent="search">
+                            <fieldset class="mx-auto w-100" style="max-width:400px">
+                                <b-form-input v-model="isbn" type="text" placeholder="ISBN"></b-form-input>
+                                <br><b-form-input v-model="title" type="text" placeholder="Title"></b-form-input>
+                                <br>
+                                <b-button id="search" style="float:right;" type="submit" class="btn btn-primary">Search</b-button>
+                                <p style="color:red; font-weight:bold;">{{errorMessage}}</p>
+                            </fieldset>
+                        </b-form>
+                    </b-card-body>
                 </b-card>
             </b-col>
             <b-col cols="12" lg="8">
@@ -81,7 +83,6 @@ export default {
     listings: [],
       isbn: '',
       title: '',
-      hasSearched: false,
       errorMessage: '',
       popupErrorMessage: '',
       username: null,
@@ -99,7 +100,6 @@ export default {
   },
   methods: {
       search() {
-          this.hasSearched = true
           const data = {
               ISBN: this.isbn,
               Title: this.title
