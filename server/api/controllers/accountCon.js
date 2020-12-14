@@ -70,7 +70,8 @@ controller.getAccountDetails = (request, response) => {
   accountModel
     .findByPk(request.session.passport.user)
     .then((account) => {
-      if (!account) return response.json(null)
+      if (!account) return response.status(403).json(null)
+
       return response.json({
         AccountID: account.AccountID,
         Username: account.Username
