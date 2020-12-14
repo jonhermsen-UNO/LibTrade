@@ -4,22 +4,22 @@ const router = express.Router()
 
 router
   .route('/')
-  .get(controller.sendAccountDetails)
+  .get(controller.getAccountDetails)
 
 router
   .route('/login')
-  .post(controller.authenticateAccount)
+  .post(controller.doAccountLogin)
 
 router
   .route('/logout')
-  .post(controller.deauthenticateAccount)
+  .post(controller.doAccountLogout)
 
 router
   .route('/register')
-  .post(controller.registerAccount)
+  .post(controller.doAccountRegister)
 
 router
   .route('/colleges')
-  .get(controller.sendColleges)
+  .get(controller.getColleges)
 
 module.exports = router

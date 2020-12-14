@@ -11,7 +11,7 @@ function passwordHash(passwordClear) {
   return bcrypt.hashSync(passwordClear, salt);
 }
 
-controller.authenticateAccount = (request, response, next) => {
+controller.doAccountLogin = (request, response, next) => {
   passport.authenticate('local', (error, account, info) => {
     if (error) return next(error)
     if (!account) return response.status(400).send([account, 'Cannot log in', info])
@@ -27,12 +27,12 @@ controller.authenticateAccount = (request, response, next) => {
   })(request, response, next)
 }
 
-controller.deauthenticateAccount = (request, response) => {
+controller.doAccountLogout = (request, response) => {
   request.logout()
   return response.send()
 }
 
-controller.registerAccount = (request, response) => {
+controller.doAccountRegister = (request, response) => {
   if (!request.body.CollegeID
     || !request.body.Email
     || !request.body.Username
@@ -60,7 +60,7 @@ controller.registerAccount = (request, response) => {
     });
 }
 
-controller.sendAccountDetails = (request, response) => {
+controller.getAccountDetails = (request, response) => {
   if (!request.session.passport
       || !request.session.passport.user) return response.json(null)
 
@@ -76,7 +76,7 @@ controller.sendAccountDetails = (request, response) => {
     .catch((error) => (console.log(error)))
 }
 
-controller.sendColleges = (request, response) => {
+controller.getColleges = (request, response) => {
   collegeModel
     .findAll({
       order: [
