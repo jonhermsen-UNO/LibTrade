@@ -1,6 +1,6 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize')
 const db = require('../../config/database')
-const sequelize = new Sequelize(db);
+const sequelize = new Sequelize(db)
 
 const model = sequelize.define('BookListing', {
   BookListingID:{
@@ -14,6 +14,6 @@ const model = sequelize.define('BookListing', {
 },{
   timestamps: false,
   tableName: 'BookListing'
-});
+})
 
 module.exports = model

@@ -1,8 +1,8 @@
 const { Op } = require('sequelize')
 const listingModel = require('../models/listingMod')
 const bookModel = require('../models/bookMod')
-const keys = require('../../config/keys');
-const axios = require('axios').default;
+const keys = require('../../config/keys')
+const axios = require('axios').default
 const controller = {}
 
 // Transform Google Book data to match the LibTrade schema
@@ -49,10 +49,10 @@ async function cacheBook(book) {
 }
 
 controller.getListings = (request, response) => {
-  let where = {};
-  if(request.body.ISBN10 ||  request.body.ISBN13) where.BookID = this.getBookByISBN(request.body.ISBN, response).BookID;
-  else if (request.body.BookID) where.BookID = request.body.BookID;
-  if (request.body.AskingPrice) where.AskingPrice = request.body.AskingPrice;
+  let where = {}
+  if(request.body.ISBN10 ||  request.body.ISBN13) where.BookID = this.getBookByISBN(request.body.ISBN, response).BookID
+  else if (request.body.BookID) where.BookID = request.body.BookID
+  if (request.body.AskingPrice) where.AskingPrice = request.body.AskingPrice
 
   listingModel.findAll({
     where: where
@@ -76,9 +76,9 @@ controller.doListingCreate = (request, response) => {
       AskingPrice: request.body.AskingPrice
     }).then((posted) => {
         if (posted) {
-          return response.send(posted);
+          return response.send(posted)
         } else {
-          return response.status(400).send('unable to create listing');
+          return response.status(400).send('unable to create listing')
         }
       }
     )
@@ -93,17 +93,15 @@ controller.doListingRemove = (request, response) => {
     }}).then(
       function(destroyed){
         if(destroyed){
-          return response.send('Listing removed successfully!');
+          return response.send('Listing removed successfully!')
         }
         else{
-          return response.status(400).send("unable to remove listing");
+          return response.status(400).send("unable to remove listing")
         }
 
       }
     )
-};
-
-//=========BOOKS=========
+}
 
 controller.getBookByID = (request, response) => {
   bookModel.findByPk(request.params.BookID)
@@ -128,7 +126,7 @@ controller.getBookByISBN = (request, response) => {
   .then((book) => {
     if (!book) {
       // fetch and cache a new book from the Google Books API
-      const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${ request.body.ISBN }&key=${ keys.google.apiKey }`;
+      const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${ request.body.ISBN }&key=${ keys.google.apiKey }`
       axios.get(URI, { responseType: "json", method:"get" }).then((data) => {
           if (!data || !data.data.items) {
             response.status(400).send("No book by ISBN")
@@ -139,7 +137,7 @@ controller.getBookByISBN = (request, response) => {
           }
       }).catch((err) => {
           response.send(`Error: ${err}`)
-      });
+      })
     } else {
       response.send(book)
     }

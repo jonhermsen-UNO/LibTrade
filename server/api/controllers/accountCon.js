@@ -7,8 +7,8 @@ const controller = {}
 function passwordHash(passwordClear) {
   // HT: https://www.npmjs.com/package/bcrypt#a-note-on-rounds
   const saltRounds = 10
-  const salt = bcrypt.genSaltSync(saltRounds);
-  return bcrypt.hashSync(passwordClear, salt);
+  const salt = bcrypt.genSaltSync(saltRounds)
+  return bcrypt.hashSync(passwordClear, salt)
 }
 
 controller.doAccountLogin = (request, response, next) => {
@@ -57,7 +57,7 @@ controller.doAccountRegister = (request, response) => {
         message += ' - username or email exists'
       }
       response.status(400).send(message)
-    });
+    })
 }
 
 controller.getAccountDetails = (request, response) => {

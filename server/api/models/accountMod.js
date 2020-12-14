@@ -1,6 +1,6 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize')
 const db = require('../../config/database')
-const sequelize = new Sequelize(db);
+const sequelize = new Sequelize(db)
 
 const model = sequelize.define('Account', {
   AccountID: {
@@ -21,6 +21,6 @@ const model = sequelize.define('Account', {
 }, {
   timestamps: false,
   tableName: 'Account'
-});
+})
 
 module.exports = model

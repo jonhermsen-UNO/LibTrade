@@ -19,6 +19,6 @@ const model = sequelize.define('Book', {
 }, {
   timestamps: false,
   tableName: 'Book'
-});
+})
 
 module.exports = model

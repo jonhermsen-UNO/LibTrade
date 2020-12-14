@@ -15,6 +15,6 @@ const model = sequelize.define('College', {
 }, {
   timestamps: false,
   tableName: 'College'
-});
+})
 
 module.exports = model
