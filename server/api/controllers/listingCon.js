@@ -48,23 +48,21 @@ async function cacheBook(book) {
   })
 }
 
-  controller.viewListing = function(req, res){
-    let where = {};
-    if(req.body.ISBN10 ||  req.body.ISBN13) where.BookID = this.findBookByISBN(req.body.ISBN, res).BookID;
-    else if (req.body.BookID) where.BookID = req.body.BookID;
-    if (req.body.AskingPrice) where.AskingPrice = req.body.AskingPrice;
-  
-    listingModel.findAll({
-      where: where
-    }).then((listings) => {
-      if (!listings) return res.status(401).send('no listing available')
-      return res.json(listings)
-    })
-  };
+controller.viewListing = (req, res) => {
+  let where = {};
+  if(req.body.ISBN10 ||  req.body.ISBN13) where.BookID = this.findBookByISBN(req.body.ISBN, res).BookID;
+  else if (req.body.BookID) where.BookID = req.body.BookID;
+  if (req.body.AskingPrice) where.AskingPrice = req.body.AskingPrice;
 
+  listingModel.findAll({
+    where: where
+  }).then((listings) => {
+    if (!listings) return res.status(401).send('no listing available')
+    return res.json(listings)
+  })
+}
 
-//posts listing made with listing form to db
-controller.postListing = function(req, res){
+controller.postListing = (req, res) => {
   listingModel.create({
     AccountID: req.body.AccountID,
     BookID: req.body.BookID,
@@ -80,8 +78,7 @@ controller.postListing = function(req, res){
   )
 };
 
-//posts removal request for listing, listing is removed from db
-controller.removeListing = function(req, res){
+controller.removeListing = (req, res) => {
   listingModel.destroy({
     where:{
       AccountID: req.body.AccountID,
