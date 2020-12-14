@@ -48,9 +48,9 @@ async function cacheBook(book) {
   })
 }
 
-controller.viewListing = (request, response) => {
+controller.getListings = (request, response) => {
   let where = {};
-  if(request.body.ISBN10 ||  request.body.ISBN13) where.BookID = this.findBookByISBN(request.body.ISBN, response).BookID;
+  if(request.body.ISBN10 ||  request.body.ISBN13) where.BookID = this.getBookByISBN(request.body.ISBN, response).BookID;
   else if (request.body.BookID) where.BookID = request.body.BookID;
   if (request.body.AskingPrice) where.AskingPrice = request.body.AskingPrice;
 
@@ -62,7 +62,7 @@ controller.viewListing = (request, response) => {
   })
 }
 
-controller.postListing = (request, response) => {
+controller.doListingCreate = (request, response) => {
   if (!request.session
     || !request.session.passport
     || !request.session.passport.user) {
@@ -84,7 +84,7 @@ controller.postListing = (request, response) => {
     )
 }
 
-controller.removeListing = (request, response) => {
+controller.doListingRemove = (request, response) => {
   listingModel.destroy({
     where:{
       AccountID: request.body.AccountID,
@@ -105,7 +105,7 @@ controller.removeListing = (request, response) => {
 
 //=========BOOKS=========
 
-controller.findBookById = (request, response) => {
+controller.getBookByID = (request, response) => {
   bookModel.findOne({
     where: { BookID: request.params.BookID }
   })
@@ -118,7 +118,7 @@ controller.findBookById = (request, response) => {
   })
 }
 
-controller.findBookByISBN = (request, response) => {
+controller.getBookByISBN = (request, response) => {
   bookModel.findOne({
     where: {
       [Op.or]: {
