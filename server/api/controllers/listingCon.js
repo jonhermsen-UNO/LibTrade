@@ -70,7 +70,10 @@ controller.getListings = (request, response) => {
   }
 
   listingModel
-    .findAll({ include: include })
+    .findAll({
+      include: include,
+      limit: 100
+    })
     .then((listings) => (response.json(listings)))
     .catch(() => (response.status(500).send('Sorry, something went wrong')))
 }
