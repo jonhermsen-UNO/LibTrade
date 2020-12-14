@@ -34,18 +34,19 @@ function transformBook(googleBook) {
 }
 
 async function cacheBook(book) {
-  bookModel.create({
-    BookID: book.BookID,
-    CacheDate: Date.now(),
-    PublishYear: book.PublishYear,
-    Publisher: book.Publisher,
-    Title: book.Title,
-    Authors: book.Authors,
-    ISBN10: book.ISBN10,
-    ISBN13: book.ISBN13,
-    RetailPrice: book.RetailPrice,
-    ThumbnailURL: book.ThumbnailURL
-  })
+  bookModel
+    .create({
+      BookID: book.BookID,
+      CacheDate: Date.now(),
+      PublishYear: book.PublishYear,
+      Publisher: book.Publisher,
+      Title: book.Title,
+      Authors: book.Authors,
+      ISBN10: book.ISBN10,
+      ISBN13: book.ISBN13,
+      RetailPrice: book.RetailPrice,
+      ThumbnailURL: book.ThumbnailURL
+    })
 }
 
 controller.getListings = (request, response) => {
