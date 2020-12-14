@@ -48,25 +48,25 @@ async function cacheBook(book) {
   })
 }
 
-controller.viewListing = (req, res) => {
+controller.viewListing = (req, response) => {
   let where = {};
-  if(req.body.ISBN10 ||  req.body.ISBN13) where.BookID = this.findBookByISBN(req.body.ISBN, res).BookID;
+  if(req.body.ISBN10 ||  req.body.ISBN13) where.BookID = this.findBookByISBN(req.body.ISBN, response).BookID;
   else if (req.body.BookID) where.BookID = req.body.BookID;
   if (req.body.AskingPrice) where.AskingPrice = req.body.AskingPrice;
 
   listingModel.findAll({
     where: where
   }).then((listings) => {
-    if (!listings) return res.status(400).send('no listing available')
-    return res.json(listings)
+    if (!listings) return response.status(400).send('no listing available')
+    return response.json(listings)
   })
 }
 
-controller.postListing = (req, res) => {
+controller.postListing = (req, response) => {
   if (!req.session
     || !req.session.passport
     || !req.session.passport.user) {
-    return res.status(403).send('The user is not authenticated')
+    return response.status(403).send('The user is not authenticated')
   }
 
   listingModel
@@ -76,15 +76,15 @@ controller.postListing = (req, res) => {
       AskingPrice: req.body.AskingPrice
     }).then((posted) => {
         if (posted) {
-          return res.send(posted);
+          return response.send(posted);
         } else {
-          return res.status(400).send('unable to create listing');
+          return response.status(400).send('unable to create listing');
         }
       }
     )
 }
 
-controller.removeListing = (req, res) => {
+controller.removeListing = (req, response) => {
   listingModel.destroy({
     where:{
       AccountID: req.body.AccountID,
@@ -93,10 +93,10 @@ controller.removeListing = (req, res) => {
     }}).then(
       function(destroyed){
         if(destroyed){
-          return res.send('Listing removed successfully!');
+          return response.send('Listing removed successfully!');
         }
         else{
-          return res.status(400).send("unable to remove listing");
+          return response.status(400).send("unable to remove listing");
         }
 
       }
@@ -105,20 +105,20 @@ controller.removeListing = (req, res) => {
 
 //=========BOOKS=========
 
-controller.findBookById = (req, res) => {
+controller.findBookById = (req, response) => {
   bookModel.findOne({
     where: { BookID: req.params.BookID }
   })
   .then((book) => {
     if (!book) {
-      res.status(400).send('No book by ID')
+      response.status(400).send('No book by ID')
     } else {
-      res.json(book)
+      response.json(book)
     }
   })
 }
 
-controller.findBookByISBN = (req, res) => {
+controller.findBookByISBN = (req, response) => {
   bookModel.findOne({
     where: {
       [Op.or]: {
@@ -133,17 +133,17 @@ controller.findBookByISBN = (req, res) => {
       const URI = `https://www.googleapis.com/books/v1/volumes?q=isbn:${ req.body.ISBN }&key=${ keys.google.apiKey }`;
       axios.get(URI, { responseType: "json", method:"get" }).then((data) => {
           if (!data || !data.data.items) {
-            res.status(400).send("No book by ISBN")
+            response.status(400).send("No book by ISBN")
           } else {
             book = transformBook(data.data.items[0])
             cacheBook(book)
-            res.send(book)
+            response.send(book)
           }
       }).catch((err) => {
-          res.send(`Error: ${err}`)
+          response.send(`Error: ${err}`)
       });
     } else {
-      res.send(book)
+      response.send(book)
     }
   })
   .catch((error) => {
