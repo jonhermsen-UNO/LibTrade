@@ -106,9 +106,7 @@ controller.doListingRemove = (request, response) => {
 //=========BOOKS=========
 
 controller.getBookByID = (request, response) => {
-  bookModel.findOne({
-    where: { BookID: request.params.BookID }
-  })
+  bookModel.findByPk(request.params.BookID)
   .then((book) => {
     if (!book) {
       response.status(400).send('No book by ID')
