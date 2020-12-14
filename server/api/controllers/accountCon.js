@@ -47,10 +47,7 @@ controller.doAccountRegister = (request, response) => {
       Username: request.body.Username,
       Password: passwordHash(request.body.Password)
     })
-    .then((account) => {
-      console.log(account)
-      response.send('Success: account created successfully')
-    })
+    .then(() => (response.send('Success: account created successfully')))
     .catch((error) => {
       let message = 'Error: cannot create user account'
       if (error.original && error.original.code === 'ER_DUP_ENTRY') {
@@ -90,6 +87,7 @@ controller.getColleges = (request, response) => {
     })
     .then((colleges) => {
       if (!colleges) response.status(500).send('Sorry, something went wrong')
+
       response.json(colleges)
     })
     .catch((error) => (response.status(500).send('Sorry, something went wrong')))
