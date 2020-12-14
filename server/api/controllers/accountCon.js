@@ -61,8 +61,11 @@ controller.doAccountRegister = (request, response) => {
 }
 
 controller.getAccountDetails = (request, response) => {
-  if (!request.session.passport
-      || !request.session.passport.user) return response.status(403).json(null)
+  if (!request.session
+    || !request.session.passport
+    || !request.session.passport.user) {
+    return response.status(403).json(null)
+  }
 
   accountModel
     .findByPk(request.session.passport.user)

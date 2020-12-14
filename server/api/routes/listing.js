@@ -3,6 +3,16 @@ const express = require('express')
 const router = express.Router()
 
 router
+  .use((request, response, next) => {
+    if (!request.session
+      || !request.session.passport
+      || !request.session.passport.user) {
+      return response.status(403).send('Error: you must login to perform that action')
+    }
+    next()
+  })
+
+router
   .route('/')
   .post(controller.getListings)
 
