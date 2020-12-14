@@ -18,6 +18,18 @@ sequelize
   .then(() => console.log('Connection has been established successfully.'))
   .catch(err => console.error('Unable to connect to the database:', err));
 
+// create tables if they do not already exist
+const accountTable = require('./api/models/accountMod')
+const collegeTable = require('./api/models/collegeMod')
+const listingTable = require('./api/models/listingMod')
+const bookTable = require('./api/models/bookMod')
+// NOTE: use { force: true } to recreate the table
+// WARNING: forcing causes all data to be lost
+accountTable.sync({ force: false })
+collegeTable.sync({ force: false })
+listingTable.sync({ force: false })
+bookTable.sync({ force: false })
+
 // start passport
 app.use(session({
 	secret: require('./config/keys').session,
