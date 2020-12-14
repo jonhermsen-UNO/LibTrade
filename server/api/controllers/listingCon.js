@@ -24,8 +24,8 @@ function transformBook(obj) {
     if (obj.volumeInfo.imageLinks) Book.ThumbnailURL = obj.volumeInfo.imageLinks.thumbnail
   }
   if (obj.saleInfo
-      || obj.saleInfo.retailPrice
-      || obj.saleInfo.retailPrice.currencyCode === "USD") {
+      && obj.saleInfo.retailPrice
+      && obj.saleInfo.retailPrice.currencyCode === "USD") {
     Book.RetailPrice = obj.saleInfo.retailPrice.amount
   } else {
     Book.RetailPrice = 0
