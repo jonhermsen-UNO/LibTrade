@@ -93,7 +93,7 @@ controller.removeListing = (req, res) => {
     }}).then(
       function(destroyed){
         if(destroyed){
-          return res.send(destroyed);
+          return res.send('Listing removed successfully!');
         }
         else{
           return res.status(400).send("unable to remove listing");
