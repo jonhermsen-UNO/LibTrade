@@ -57,7 +57,7 @@ controller.viewListing = (req, res) => {
   listingModel.findAll({
     where: where
   }).then((listings) => {
-    if (!listings) return res.status(401).send('no listing available')
+    if (!listings) return res.status(400).send('no listing available')
     return res.json(listings)
   })
 }
@@ -66,7 +66,7 @@ controller.postListing = (req, res) => {
   if (!req.session
     || !req.session.passport
     || !req.session.passport.user) {
-    return res.status(401).send('The user is not authenticated')
+    return res.status(403).send('The user is not authenticated')
   }
 
   listingModel
@@ -96,7 +96,7 @@ controller.removeListing = (req, res) => {
           return res.send(destroyed);
         }
         else{
-          return res.status(401).send("unable to remove listing");
+          return res.status(400).send("unable to remove listing");
         }
 
       }
