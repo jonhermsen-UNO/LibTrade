@@ -76,7 +76,7 @@ export default {
   },
     mounted: function() {
     this.getUserData();
-    this.getListings();
+    this.search();
   },
   data: function() {
       return {
@@ -111,7 +111,7 @@ export default {
       remove(listing) {
           const data = { BookListingID: listing.BookListingID }
           axios.post("api/listing/remove", data)
-          .then(() => { this.getListings(); })
+          .then(() => { this.search(); })
           .catch((error) => console.log(error.response));
       },
     purchase(listing) {
@@ -120,10 +120,6 @@ export default {
         this.popupErrorMessage = 'There is an error with your input'
         else this.remove(listing);
     },
-    getListings() {
-        axios.post("api/listing")
-        .then((response) => { this.listings = response.data; })
-      },
     getUserData() {
      axios.get("/api/account")
       .then((response) => { this.username = response.data.Username; this.accountID = response.data.AccountID;})
