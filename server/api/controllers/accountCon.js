@@ -86,7 +86,7 @@ controller.getColleges = (request, response) => {
       ]
     })
     .then((colleges) => {
-      if (!colleges) response.status(500).send('Sorry, something went wrong')
+      if (!colleges) return response.status(500).send('Sorry, something went wrong')
 
       response.json(colleges)
     })
