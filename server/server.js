@@ -5,7 +5,7 @@ const app = express()
 const session = require('express-session')
 const bodyParser = require('body-parser')
 const {Sequelize, Model, DataTypes } = require('sequelize')
-var db = require('./lib/dbconn')
+var db = require('./config/database')
 
 // enable content-type application/json
 app.use(bodyParser.json());

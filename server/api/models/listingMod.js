@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const db = require('../../lib/dbconn')
+const db = require('../../config/database')
 const sequelize = new Sequelize(db);
 const model = sequelize.define('BookListing', {
   BookListingID:{
