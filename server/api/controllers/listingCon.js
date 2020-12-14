@@ -58,6 +58,7 @@ controller.getListings = (request, response) => {
     || request.body.ISBN !== '') {
     include.push({
       model: bookModel,
+      attributes: [],
       where: {
         Title: { [Op.like]: '%' + request.body.Title + '%' },
         [Op.or]: {
