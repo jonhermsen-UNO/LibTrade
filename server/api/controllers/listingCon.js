@@ -48,12 +48,6 @@ async function cacheBook(book) {
   })
 }
 
-//gets listing form to create listing
- /*controller.createListing = function(req, res){
-   res.send("createListing not yet implemented (GET)");
- };*/
-
-  //gets listing from db to view listing
   controller.viewListing = function(req, res){
     let where = {};
     if(req.body.ISBN10 ||  req.body.ISBN13) where.BookID = this.findBookByISBN(req.body.ISBN, res).BookID;
@@ -106,23 +100,21 @@ controller.removeListing = function(req, res){
     )
 };
 
-
 //=========BOOKS=========
 
-//Finds book from google books api by book id
 controller.findBookById = (req, res) => {
-  const URI = `https://www.googleapis.com/books/v1/volumes/${req.params.BookID}`;
-  axios.get(URI, {responseType: "json", method:"get"}).then((data) => {
-    // TODO: use cache-only approach
-    res.send(transformBook(data.data))
-  }).catch((err) => {
-      console.log(err);
-      res.send(`Error: ${err}`)
+  bookModel.findOne({
+    where: { BookID: req.params.BookID }
   })
-
+  .then((book) => {
+    if (!book) {
+      res.status(400).send('No book by ID')
+    } else {
+      res.json(book)
+    }
+  })
 }
-//Searchs for book with name matching search query.
-//Returns book array where searchquery exists in name anywhere
+
 controller.findBookByISBN = (req, res) => {
   bookModel.findOne({
     where: {
