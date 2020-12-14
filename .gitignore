@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-keys.js
 /dist
 
 
@@ -128,3 +127,5 @@ dist
 # TernJS port file
 .tern-port
 
+# configuration files
+config/
