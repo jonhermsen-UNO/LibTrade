@@ -1,5 +1,5 @@
 const passport = require('passport')
-const passportSetup = require('./config/passport-setup')
+const passportSetup = require('./util/passport')
 const express = require('express')
 const app = express()
 const session = require('express-session')
