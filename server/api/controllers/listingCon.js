@@ -84,12 +84,13 @@ controller.doListingCreate = (request, response) => {
 }
 
 controller.doListingRemove = (request, response) => {
+  if (!request.body.BookListingID) return response.status(400).send('Error: invalid input - please specify a book listing by ID')
+
   listingModel
     .destroy({
       where: {
         AccountID: request.session.passport.user,
-        BookID: request.body.BookID,
-        AskingPrice: request.body.AskingPrice
+        BookListingID: request.body.BookListingID
       }
     })
     .then((destroyCount) => {

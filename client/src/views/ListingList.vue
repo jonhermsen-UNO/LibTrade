@@ -109,11 +109,7 @@ export default {
           .catch(() => { this.errorMessage = "There was a problem performing your search." })
       },
       remove(listing) {
-          const data = {
-            AccountID: listing.AccountID,
-            BookID: listing.BookID,
-            AskingPrice: listing.AskingPrice
-          }
+          const data = { BookListingID: listing.BookListingID }
           axios.post("api/listing/remove", data)
           .then(() => { this.getListings(); })
           .catch((error) => console.log(error.response));
