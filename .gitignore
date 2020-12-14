@@ -128,4 +128,4 @@ dist
 .tern-port
 
 # configuration files
-config/
+config
