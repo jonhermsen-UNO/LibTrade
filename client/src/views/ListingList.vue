@@ -2,7 +2,7 @@
     <div>
     <b-container fluid="lg">
         <b-row>
-            <b-col cols="12" lg="4">
+            <b-col cols="12" lg="4" class="mb-3">
                 <b-card no-body>
                     <b-card-header class="text-center">Search Book Listings</b-card-header>
                     <b-card-body>
