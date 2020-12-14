@@ -38,7 +38,7 @@
                             <b-form-group label="Security Code" label-for="cardcvv">
                             <b-form-input id="cardcvv" v-model="creditCardData.cvv" type="number"></b-form-input>
                             </b-form-group>
-                            <p style="color:red; font-weight:bold">{{popupErrorMessage}}</p>
+                            <p class="text-danger">{{popupErrorMessage}}</p>
                         </b-modal>
                         <b-button v-if="listing.AccountID == accountID" id="remove" v-on:click="remove(listing)">Remove This Listing</b-button>
                     </b-list-group-item>
