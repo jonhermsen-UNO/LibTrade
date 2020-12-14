@@ -52,26 +52,19 @@ async function cacheBook(book) {
 }
 
 controller.getListings = (request, response) => {
-  let where = {},
-    hasFilter = false,
-    include = []
+  let include = []
 
-  if (request.body.Title !== '') {
-    hasFilter = true
-    where.Title = { [Op.like]: '%' + request.body.Title + '%' }
-  }
-  if (request.body.ISBN !== '') {
-    hasFilter = true
-    where[[Op.or]] = {
-      ISBN10: { [Op.like]: '%' + request.body.ISBN + '%' },
-      ISBN13: { [Op.like]: '%' + request.body.ISBN + '%' }
-    }
-  }
-
-  if (hasFilter) {
+  if (request.body.Title !== ''
+    || request.body.ISBN !== '') {
     include.push({
       model: bookModel,
-      where: where
+      where: {
+        Title: { [Op.like]: '%' + request.body.Title + '%' },
+        [Op.or]: {
+          ISBN10: { [Op.like]: '%' + request.body.ISBN + '%' },
+          ISBN13: { [Op.like]: '%' + request.body.ISBN + '%' }
+        }
+      }
     })
   }
 
