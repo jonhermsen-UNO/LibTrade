@@ -76,4 +76,4 @@ app.use('/api/listing', listing)
 
 
 const port = process.env.PORT || '8001'
-app.listen(port, () => { console.log("Now listening on port " + port) })
+app.listen(port, () => { console.log('Now listening on port ' + port) })

@@ -81,6 +81,7 @@ controller.getAccountDetails = (request, response) => {
 controller.getColleges = (request, response) => {
   collegeModel
     .findAll({
+      attributes: ['CollegeID', 'Name', 'State'],
       order: [
         ['State', 'ASC'],
         ['Name', 'ASC']
