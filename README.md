@@ -27,7 +27,7 @@ A textbook exchange service for university students.
 
 Before using LibTrade in a web browser, the application server and API server must both be started. Each server should be started using a separate terminal window.
 
-```shell
+```bash
 # Start the application server
 cd client
 npm run serve
