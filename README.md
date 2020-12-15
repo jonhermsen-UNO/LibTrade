@@ -6,7 +6,6 @@ A textbook exchange service for university students.
 
 * Ubuntu Server 16.04+ LTS
 * MySQL Server 5.7+
-* Apache 2.4+
 
 ### Built with
 
