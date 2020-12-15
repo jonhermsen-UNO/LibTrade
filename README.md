@@ -19,7 +19,7 @@ A textbook exchange service for university students.
   * Jest
   * MySQL
   * Passport
-  * TypeORM
+  * Sequelize
   * Vue
 
 ## Installing LibTrade
