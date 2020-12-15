@@ -7,20 +7,6 @@ A textbook exchange service for university students.
 * Ubuntu Server 16.04+ LTS
 * MySQL Server 5.7+
 
-### Built with
-
-* Bootstrap
-* Google Books
-* NodeJS 12.19
-* NPM 6.14
-  * Axios
-  * Express
-  * Jest
-  * MySQL
-  * Passport
-  * Sequelize
-  * Vue
-
 ## Installing LibTrade
 
 ### Quick Start
@@ -73,6 +59,20 @@ npm run serve
 cd server
 npm run serve
 ```
+
+## Attribution
+
+* Bootstrap
+* Google Books
+* NodeJS 12.19
+* NPM 6.14
+  * Axios
+  * Express
+  * Jest
+  * MySQL
+  * Passport
+  * Sequelize
+  * Vue
 
 ## Contributors
 
