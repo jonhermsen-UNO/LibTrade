@@ -19,11 +19,11 @@ describe("Footer.vue", () => {
 
 describe("NavBar.vue", () => {
     it("Displays the correct information on the NavBar when instantiated", () => {
-        const wrapper = mount(NavBar, {localVue, router});
+        const wrapper = mount(NavBar, {localVue, router, propsData: {Username: null}});
         expect(wrapper.text()).toMatch("LibTrade");
         expect(wrapper.text()).toMatch("Home");
         expect(wrapper.text()).toMatch("Register");
-        expect(wrapper.text()).toMatch("Book Listings");
+        expect(wrapper.text()).toMatch("Log In");
     })
     it("Displays the Log In and not the Log Out button when a user is logged out", () => {
         const wrapper = mount(NavBar, {localVue, router, propsData: {Username: null}});

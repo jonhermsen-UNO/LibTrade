@@ -11,9 +11,9 @@ localVue.use(VueRouter)
 const router = new VueRouter()
 
 describe("ListingList", () => {
-    it("displays the search bar when the page is instantiated", async () => {
+    it("displays notification to search when the page is instantiated", async () => {
         const wrapper = mount(ListingList, {localVue, router});
-        expect(wrapper.text()).toMatch("Please search for a book");
+        expect(wrapper.text()).toMatch("Search Book Listings");
         expect(wrapper.text()).toMatch("Search");
         wrapper.destroy();
     })
